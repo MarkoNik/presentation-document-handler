@@ -9,9 +9,7 @@ public abstract class RuNodeComposite extends RuNode {
         super(name, parent);
     }
 
-    public void addChild(RuNode child) {
-        children.add(child);
-    }
+    public abstract void addChild(RuNode child);
 
     public void removeChild(RuNode child) {
         children.remove(child);

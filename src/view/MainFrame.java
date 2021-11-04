@@ -1,11 +1,12 @@
-package View;
+package view;
 
-import Controller.ActionManager;
+import controller.ActionManager;
+import model.workspace.Workspace;
+import view.gui.tree.model.MyTreeNode;
+import view.gui.tree.view.MyTree;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 public class MainFrame extends JFrame {
 
@@ -32,7 +33,12 @@ public class MainFrame extends JFrame {
         add(new Toolbar(), BorderLayout.NORTH);
 
         JPanel desktop = new JPanel();
-        JScrollPane scroll = new JScrollPane();
+
+        Workspace ws = new Workspace("workspace", null);
+        MyTreeNode mtn = new MyTreeNode("workspace", ws);
+        MyTree mt = new MyTree(mtn);
+        JScrollPane scroll = new JScrollPane(mt);
+
         scroll.setMinimumSize(new Dimension(200, 150));
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, desktop);
         getContentPane().add(split, BorderLayout.CENTER);

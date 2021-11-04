@@ -1,6 +1,6 @@
-package Main;
+package main;
 
-import View.MainFrame;
+import view.MainFrame;
 
 public class Main {
 

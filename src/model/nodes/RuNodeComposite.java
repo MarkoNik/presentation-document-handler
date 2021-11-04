@@ -1,4 +1,6 @@
-package Model;
+package model.nodes;
+
+import model.nodes.RuNode;
 
 import java.util.List;
 

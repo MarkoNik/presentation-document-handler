@@ -1,9 +1,7 @@
-package Controller;
+package controller;
 
-import View.ChangeAuthorDialog;
-import View.MainFrame;
+import view.ChangeAuthorDialog;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class ChangeAuthorAction extends AbstractRudokAction {

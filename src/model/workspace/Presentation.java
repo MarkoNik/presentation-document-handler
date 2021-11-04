@@ -1,4 +1,7 @@
-package Model;
+package model.workspace;
+
+import model.nodes.RuNode;
+import model.nodes.RuNodeComposite;
 
 public class Presentation extends RuNodeComposite {
     private String author;

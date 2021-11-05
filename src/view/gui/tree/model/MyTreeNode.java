@@ -11,13 +11,9 @@ public class MyTreeNode extends DefaultMutableTreeNode {
     String name;
     RuNode node;
 
-    public MyTreeNode(String name, RuNode node) {
-        this.name = name;
-        this.node = node;
-    }
-
     public MyTreeNode(RuNode node) {
         this.node = node;
+        this.name = node.getName();
     }
 
     public RuNode getNode() {
@@ -34,5 +30,10 @@ public class MyTreeNode extends DefaultMutableTreeNode {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -3,7 +3,7 @@ package view;
 import controller.ActionManager;
 import model.workspace.Workspace;
 import view.gui.tree.model.MyTreeNode;
-import view.gui.tree.view.MyTree;
+import view.gui.tree.view.RuTree;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,9 +34,9 @@ public class MainFrame extends JFrame {
 
         JPanel desktop = new JPanel();
 
-        Workspace ws = new Workspace("workspace", null);
-        MyTreeNode mtn = new MyTreeNode("workspace", ws);
-        MyTree mt = new MyTree(mtn);
+        Workspace ws = new Workspace("Workspace", null);
+        MyTreeNode mtn = new MyTreeNode(ws);
+        RuTree mt = new RuTree(mtn);
         JScrollPane scroll = new JScrollPane(mt);
 
         scroll.setMinimumSize(new Dimension(200, 150));

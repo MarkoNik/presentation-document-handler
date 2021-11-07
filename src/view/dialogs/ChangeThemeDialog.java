@@ -1,4 +1,6 @@
-package view;
+package view.dialogs;
+
+import view.MainFrame;
 
 import javax.swing.*;
 

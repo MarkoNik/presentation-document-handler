@@ -1,6 +1,6 @@
 package controller;
 
-import view.ChangeThemeDialog;
+import view.dialogs.ChangeThemeDialog;
 
 import java.awt.event.ActionEvent;
 

@@ -1,6 +1,6 @@
 package controller;
 
-import view.ChangeAuthorDialog;
+import view.dialogs.ChangeAuthorDialog;
 
 import java.awt.event.ActionEvent;
 

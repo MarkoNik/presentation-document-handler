@@ -6,14 +6,12 @@ import model.nodes.RuNodeComposite;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 
-public class MyTreeNode extends DefaultMutableTreeNode {
+public class RuTreeNode extends DefaultMutableTreeNode {
 
-    String name;
     RuNode node;
 
-    public MyTreeNode(RuNode node) {
+    public RuTreeNode(RuNode node) {
         this.node = node;
-        this.name = node.getName();
     }
 
     public RuNode getNode() {
@@ -25,15 +23,15 @@ public class MyTreeNode extends DefaultMutableTreeNode {
     }
 
     public String getName() {
-        return name;
+        return node.getName();
     }
 
     public void setName(String name) {
-        this.name = name;
+        node.setName(name);
     }
 
     @Override
     public String toString() {
-        return name;
+        return node.getName();
     }
 }

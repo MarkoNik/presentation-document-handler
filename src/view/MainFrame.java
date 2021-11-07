@@ -1,9 +1,8 @@
 package view;
 
 import controller.ActionManager;
-import model.workspace.Presentation;
 import model.workspace.Workspace;
-import view.gui.tree.model.MyTreeNode;
+import view.gui.tree.model.RuTreeNode;
 import view.gui.tree.view.RuTree;
 
 import javax.swing.*;
@@ -43,7 +42,7 @@ public class MainFrame extends JFrame {
 
 
         Workspace ws = new Workspace("Workspace", null);
-        MyTreeNode mtn = new MyTreeNode(ws);
+        RuTreeNode mtn = new RuTreeNode(ws);
         tree = new RuTree(mtn);
         JScrollPane scroll = new JScrollPane(tree);
 

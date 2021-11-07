@@ -24,6 +24,7 @@ public class Workspace extends RuNodeComposite implements IPublisher {
         } else {
             System.err.println("Prosledjujes pogresnu stvar");
         }
+        maxChild++;
     }
 
     @Override

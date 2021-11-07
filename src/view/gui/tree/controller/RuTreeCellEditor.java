@@ -1,7 +1,6 @@
 package view.gui.tree.controller;
 
-import model.workspace.Workspace;
-import view.gui.tree.model.MyTreeNode;
+import view.gui.tree.model.RuTreeNode;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellEditor;
@@ -41,10 +40,10 @@ public class RuTreeCellEditor extends DefaultTreeCellEditor implements ActionLis
 
     public void actionPerformed(ActionEvent e){
 
-        if (!(clickedOn instanceof MyTreeNode))
+        if (!(clickedOn instanceof RuTreeNode))
             return;
 
-        MyTreeNode clicked = (MyTreeNode) clickedOn;
+        RuTreeNode clicked = (RuTreeNode) clickedOn;
 
 
         clicked.setName(e.getActionCommand());

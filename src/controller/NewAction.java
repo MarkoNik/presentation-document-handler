@@ -1,6 +1,5 @@
 package controller;
 
-import main.Main;
 import model.nodes.RuNode;
 import model.nodes.RuNodeComposite;
 import model.workspace.Presentation;
@@ -8,11 +7,9 @@ import model.workspace.Project;
 import model.workspace.Slide;
 import model.workspace.Workspace;
 import view.MainFrame;
-import view.gui.tree.controller.RuTreeSelectionListener;
-import view.gui.tree.model.MyTreeNode;
+import view.gui.tree.model.RuTreeNode;
 
 import javax.swing.*;
-import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 
 public class NewAction extends AbstractRudokAction {
@@ -26,19 +23,18 @@ public class NewAction extends AbstractRudokAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        MyTreeNode viewNode = (MyTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
+        RuTreeNode viewNode = (RuTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
 
         // expanduje samo kad dodam drugo dete?
         MainFrame.getInstance().getTree().expandPath(MainFrame.getInstance().getTree().getSelectionPath());
 
         RuNode modelNode = viewNode.getNode();
-        int childCount = 0;
         RuNode newNode = null;
-
+        RuTreeNode newNodeView = null;
+        int childCount = 0;
 
         if (modelNode instanceof RuNodeComposite) {
-            childCount = ((RuNodeComposite) modelNode).getChildren().size();
-            childCount++;
+            childCount = ((RuNodeComposite) modelNode).getMaxChild();
         }
 
         if (modelNode instanceof Workspace) {
@@ -49,12 +45,13 @@ public class NewAction extends AbstractRudokAction {
 
         } else if (modelNode instanceof Presentation) {
             newNode = new Slide("Slide " + childCount, modelNode, childCount);
-
         }
 
         if (newNode != null) {
             ((RuNodeComposite) modelNode).addChild(newNode);
-            viewNode.add(new MyTreeNode(newNode));
+            RuTreeNode newViewNode = new RuTreeNode(newNode);
+            viewNode.add(newViewNode);
+
             SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getTree());
         }
 

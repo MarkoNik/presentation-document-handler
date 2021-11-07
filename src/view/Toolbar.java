@@ -13,6 +13,7 @@ public class Toolbar extends JToolBar {
         setFloatable(false);
         setBackground(new Color(62, 155, 213));
         add(MainFrame.getInstance().getActionManager().getNewAction());
+        add(MainFrame.getInstance().getActionManager().getDeleteAction());
         add(MainFrame.getInstance().getActionManager().getInfoAction());
         add(MainFrame.getInstance().getActionManager().getChangeAuthorAction());
         add(MainFrame.getInstance().getActionManager().getChangeThemeAction());

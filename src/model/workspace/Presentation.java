@@ -27,5 +27,6 @@ public class Presentation extends RuNodeComposite {
         } else {
             System.err.println("Prosledjujes pogresnu stvar");
         }
+        maxChild++;
     }
 }

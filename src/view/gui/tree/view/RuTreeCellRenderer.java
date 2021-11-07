@@ -2,7 +2,7 @@ package view.gui.tree.view;
 
 import model.workspace.Project;
 import model.workspace.Workspace;
-import view.gui.tree.model.MyTreeNode;
+import view.gui.tree.model.RuTreeNode;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -18,14 +18,14 @@ public class RuTreeCellRenderer extends DefaultTreeCellRenderer {
 
         super.getTreeCellRendererComponent(tree, value, sel,expanded, leaf, row, hasFocus);
 
-        if (((MyTreeNode)value).getNode() instanceof Workspace) {
+        if (((RuTreeNode)value).getNode() instanceof Workspace) {
             URL imageURL = getClass().getResource("icons/tdiagram.gif");
             Icon icon = null;
             if (imageURL != null)
                 icon = new ImageIcon(imageURL);
             setIcon(icon);
 
-        } else if (((MyTreeNode)value).getNode() instanceof Project) {
+        } else if (((RuTreeNode)value).getNode() instanceof Project) {
             URL imageURL = getClass().getResource("icons/tproject.gif");
             Icon icon = null;
             if (imageURL != null)

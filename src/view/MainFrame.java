@@ -1,6 +1,7 @@
 package view;
 
 import controller.ActionManager;
+import model.workspace.Presentation;
 import model.workspace.Workspace;
 import view.gui.tree.model.MyTreeNode;
 import view.gui.tree.view.RuTree;
@@ -14,6 +15,12 @@ public class MainFrame extends JFrame {
     private Menu menu;
     private Toolbar toolbar;
     private ActionManager actionManager;
+
+
+    private RuTree tree;
+
+
+
 
     private MainFrame() throws HeadlessException { }
 
@@ -34,10 +41,12 @@ public class MainFrame extends JFrame {
 
         JPanel desktop = new JPanel();
 
+
         Workspace ws = new Workspace("Workspace", null);
         MyTreeNode mtn = new MyTreeNode(ws);
-        RuTree mt = new RuTree(mtn);
-        JScrollPane scroll = new JScrollPane(mt);
+        tree = new RuTree(mtn);
+        JScrollPane scroll = new JScrollPane(tree);
+
 
         scroll.setMinimumSize(new Dimension(200, 150));
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, desktop);
@@ -65,5 +74,13 @@ public class MainFrame extends JFrame {
 
     public ActionManager getActionManager() {
         return actionManager;
+    }
+
+    public RuTree getTree() {
+        return tree;
+    }
+
+    public void setTree(RuTree tree) {
+        this.tree = tree;
     }
 }

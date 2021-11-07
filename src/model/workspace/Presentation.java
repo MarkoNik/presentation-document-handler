@@ -7,6 +7,13 @@ public class Presentation extends RuNodeComposite {
     private String author;
     private String backgroundPath;
 
+
+
+    public Presentation(String name, RuNode parent, String author) {
+        super(name, parent);
+        this.author = author;
+    }
+
     public Presentation(String name, RuNode parent, String author, String backgroundPath) {
         super(name, parent);
         this.author = author;

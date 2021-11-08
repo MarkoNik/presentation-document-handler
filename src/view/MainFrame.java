@@ -1,9 +1,12 @@
 package view;
 
 import controller.ActionManager;
+import model.workspace.Slide;
 import model.workspace.Workspace;
 import view.gui.tree.model.RuTreeNode;
 import view.gui.tree.view.RuTree;
+import view.workspace.ProjectView;
+import view.workspace.SlideView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,14 +17,16 @@ public class MainFrame extends JFrame {
     private Menu menu;
     private Toolbar toolbar;
     private ActionManager actionManager;
-
+    private JPanel desktop;
+    private JSplitPane split;
+    private JPanel workspace;
+    private ProjectView projectView;
 
     private RuTree tree;
 
 
-
-
-    private MainFrame() throws HeadlessException { }
+    private MainFrame() throws HeadlessException {
+    }
 
     private void init() {
         actionManager = new ActionManager();
@@ -38,7 +43,7 @@ public class MainFrame extends JFrame {
         setJMenuBar(menu);
         add(new Toolbar(), BorderLayout.NORTH);
 
-        JPanel desktop = new JPanel();
+        desktop = new JPanel();
 
 
         Workspace ws = new Workspace("Workspace", null);
@@ -48,15 +53,19 @@ public class MainFrame extends JFrame {
 
 
         scroll.setMinimumSize(new Dimension(200, 150));
-        JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, desktop);
+        split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll, desktop);
         getContentPane().add(split, BorderLayout.CENTER);
         split.setDividerLocation(250);
         split.setOneTouchExpandable(true);
 
 
+        workspace = new JPanel();
+        workspace.setLayout(new BorderLayout());
+        split.add(workspace, JSplitPane.RIGHT);
 
 
-
+        projectView = new ProjectView();
+        workspace.add(projectView);
 
 
         setVisible(true);
@@ -81,5 +90,17 @@ public class MainFrame extends JFrame {
 
     public void setTree(RuTree tree) {
         this.tree = tree;
+    }
+
+    public JSplitPane getSplit() {
+        return split;
+    }
+
+    public JPanel getWorkspace() {
+        return workspace;
+    }
+
+    public ProjectView getProjectView() {
+        return projectView;
     }
 }

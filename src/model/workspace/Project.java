@@ -8,9 +8,7 @@ import observer.ISubscriber;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Project extends RuNodeComposite implements IPublisher {
-
-    private List<ISubscriber> subscribers;
+public class Project extends RuNodeComposite {
 
     public Project(String name, RuNode parent) {
         super(name, parent);
@@ -20,6 +18,7 @@ public class Project extends RuNodeComposite implements IPublisher {
     public void addChild(RuNode child) {
         if (child instanceof Presentation) {
             children.add(child);
+            notifySubscriber(child);
         } else {
             System.err.println("Prosledjujes pogresnu stvar");
         }
@@ -27,31 +26,5 @@ public class Project extends RuNodeComposite implements IPublisher {
     }
 
 
-    @Override
-    public void addSubscriber(ISubscriber sub) {
 
-        if (sub == null) {
-            return;
-        }
-        if (subscribers == null) {
-            subscribers = new ArrayList<>();
-        }
-        if (subscribers.contains(sub)) {
-            return;
-        }
-
-        subscribers.add(sub);
-    }
-
-    @Override
-    public void removeSubscriber(ISubscriber sub) {
-        subscribers.remove(sub);
-    }
-
-    @Override
-    public void notifySubscriber(Object notification) {
-        for (ISubscriber sub : subscribers) {
-            sub.update(notification);
-        }
-    }
 }

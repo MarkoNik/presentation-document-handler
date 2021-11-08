@@ -8,9 +8,7 @@ import observer.ISubscriber;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Workspace extends RuNodeComposite implements IPublisher {
-
-    private List<ISubscriber> subscribers;
+public class Workspace extends RuNodeComposite {
 
     public Workspace(String name, RuNode parent) {
         super(name, parent);
@@ -27,31 +25,4 @@ public class Workspace extends RuNodeComposite implements IPublisher {
         maxChild++;
     }
 
-    @Override
-    public void addSubscriber(ISubscriber sub) {
-
-        if (sub == null) {
-            return;
-        }
-        if (subscribers == null) {
-            subscribers = new ArrayList<>();
-        }
-        if (subscribers.contains(sub)) {
-            return;
-        }
-
-        subscribers.add(sub);
-    }
-
-    @Override
-    public void removeSubscriber(ISubscriber sub) {
-        subscribers.remove(sub);
-    }
-
-    @Override
-    public void notifySubscriber(Object notification) {
-        for (ISubscriber sub : subscribers) {
-            sub.update(notification);
-        }
-    }
 }

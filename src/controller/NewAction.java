@@ -1,5 +1,6 @@
 package controller;
 
+import main.Main;
 import model.nodes.RuNode;
 import model.nodes.RuNodeComposite;
 import model.workspace.Presentation;
@@ -8,8 +9,12 @@ import model.workspace.Slide;
 import model.workspace.Workspace;
 import view.MainFrame;
 import view.gui.tree.model.RuTreeNode;
+import view.workspace.PresentationView;
+import view.workspace.ProjectView;
+import view.workspace.SlideView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class NewAction extends AbstractRudokAction {
@@ -39,12 +44,15 @@ public class NewAction extends AbstractRudokAction {
 
         if (modelNode instanceof Workspace) {
             newNode = new Project("Project " + childCount, modelNode);
+            MainFrame.getInstance().getProjectView().setProject((Project) newNode);
 
         } else if (modelNode instanceof Project) {
             newNode = new Presentation("Presentation " + childCount, modelNode, "user");
 
         } else if (modelNode instanceof Presentation) {
+
             newNode = new Slide("Slide " + childCount, modelNode, childCount);
+
         }
 
         if (newNode != null) {

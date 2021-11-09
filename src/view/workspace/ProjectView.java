@@ -1,5 +1,7 @@
 package view.workspace;
 
+import model.message.NOTE;
+import model.message.Notification;
 import model.workspace.Presentation;
 import model.workspace.Project;
 import observer.ISubscriber;
@@ -20,11 +22,17 @@ public class ProjectView extends JPanel implements ISubscriber {
     }
 
     @Override
-    public void update(Object notification) {
-        Presentation presentation = (Presentation) notification;
-        PresentationView presentationView = new PresentationView(presentation);
-        jTabbedPane.addTab(presentation.getName(), presentationView);
-        jTabbedPane.validate();
+    public void update(Notification notification) {
+        NOTE note = notification.getType();
+        switch(note) {
+
+            case CHILD_ADDED: {
+                Presentation presentation = (Presentation) notification.getPayload();
+                PresentationView presentationView = new PresentationView(presentation);
+                jTabbedPane.addTab(presentation.getName(), presentationView);
+                jTabbedPane.validate();
+            }
+        }
     }
 
     public void setProject(Project project) {

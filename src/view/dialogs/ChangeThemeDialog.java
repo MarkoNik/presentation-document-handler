@@ -9,7 +9,6 @@ public class ChangeThemeDialog extends JDialog {
         super(MainFrame.getInstance(), "Change Theme", true);
 
 
-
         setVisible(true);
     }
 }

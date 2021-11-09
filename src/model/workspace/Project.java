@@ -1,5 +1,7 @@
 package model.workspace;
 
+import model.message.NOTE;
+import model.message.Notification;
 import model.nodes.RuNode;
 import model.nodes.RuNodeComposite;
 import observer.IPublisher;
@@ -18,7 +20,7 @@ public class Project extends RuNodeComposite {
     public void addChild(RuNode child) {
         if (child instanceof Presentation) {
             children.add(child);
-            notifySubscriber(child);
+            notifySubscriber(new Notification(NOTE.CHILD_ADDED, child));
         } else {
             System.err.println("Prosledjujes pogresnu stvar");
         }

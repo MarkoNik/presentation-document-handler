@@ -1,12 +1,9 @@
 package model.workspace;
 
+import model.message.NOTE;
+import model.message.Notification;
 import model.nodes.RuNode;
 import model.nodes.RuNodeComposite;
-import observer.IPublisher;
-import observer.ISubscriber;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Presentation extends RuNodeComposite {
 
@@ -30,7 +27,7 @@ public class Presentation extends RuNodeComposite {
     public void addChild(RuNode child) {
         if (child instanceof Slide) {
             children.add(child);
-            notifySubscriber(child);
+            notifySubscriber(new Notification(NOTE.CHILD_ADDED, child));
         } else {
             System.err.println("Prosledjujes pogresnu stvar");
         }
@@ -43,6 +40,7 @@ public class Presentation extends RuNodeComposite {
 
     public void setAuthor(String author) {
         this.author = author;
+        notifySubscriber(new Notification(NOTE.AUTHOR_CHANGED, author));
     }
 
 

@@ -1,5 +1,7 @@
 package view.workspace;
 
+import model.message.NOTE;
+import model.message.Notification;
 import model.workspace.Presentation;
 import model.workspace.Slide;
 import observer.ISubscriber;
@@ -43,14 +45,28 @@ public class PresentationView extends JPanel implements ISubscriber {
 
 
     @Override
-    public void update(Object notification) {
+    public void update(Notification notification) {
 
-        Slide slide = (Slide) notification;
-        SlideView slideView = new SlideView(slide, new Dimension(1000, 500));
-        slides.add(slideView);
-        jPanel.add(slideView);
-        jPanel.add(Box.createVerticalStrut(50));
-        validate();
+        NOTE note = notification.getType();
+        switch(note) {
+
+            case CHILD_ADDED: {
+                Slide slide = (Slide) notification.getPayload();
+                SlideView slideView = new SlideView(slide, new Dimension(1000, 500));
+                slides.add(slideView);
+                jPanel.add(slideView);
+                jPanel.add(Box.createVerticalStrut(50));
+                validate();
+                break;
+
+            }
+            case AUTHOR_CHANGED: {
+                String newAuthor = (String) notification.getPayload();
+                break;
+
+            }
+        }
+
 
     }
 }

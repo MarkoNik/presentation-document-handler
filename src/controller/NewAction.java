@@ -9,12 +9,8 @@ import model.workspace.Slide;
 import model.workspace.Workspace;
 import view.MainFrame;
 import view.gui.tree.model.RuTreeNode;
-import view.workspace.PresentationView;
-import view.workspace.ProjectView;
-import view.workspace.SlideView;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class NewAction extends AbstractRudokAction {

@@ -1,5 +1,6 @@
 package model.nodes;
 
+import model.message.Notification;
 import observer.IPublisher;
 import observer.ISubscriber;
 
@@ -57,7 +58,7 @@ public abstract class RuNode implements IPublisher {
     }
 
     @Override
-    public void notifySubscriber(Object notification) {
+    public void notifySubscriber(Notification notification) {
         for (ISubscriber sub : subscribers) {
             sub.update(notification);
         }

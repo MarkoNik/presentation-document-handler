@@ -5,5 +5,6 @@ public enum NOTE {
     THEME_CHANGED,
     NAME_CHANGED,
     CHILD_ADDED,
-    CHILD_REMOVED
+    CHILD_REMOVED,
+    NODE_REMOVED,
 }

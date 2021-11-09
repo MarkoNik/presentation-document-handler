@@ -1,5 +1,8 @@
 package view.gui.tree.controller;
 
+import main.Main;
+import model.workspace.Project;
+import view.MainFrame;
 import view.gui.tree.model.RuTreeNode;
 
 import javax.swing.event.TreeSelectionEvent;
@@ -11,6 +14,10 @@ public class RuTreeSelectionListener implements TreeSelectionListener {
     public void valueChanged(TreeSelectionEvent e) {
         TreePath path = e.getPath();
         RuTreeNode treeItemSelected = (RuTreeNode)path.getLastPathComponent();
+
+        if (treeItemSelected.getNode() instanceof Project project) {
+            MainFrame.getInstance().getProjectView().setProject(project);
+        }
         System.out.println("Selektovan cvor:"+ treeItemSelected.getName());
         System.out.println("getPath: "+e.getPath());
     }

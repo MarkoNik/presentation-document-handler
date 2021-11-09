@@ -1,6 +1,9 @@
 package model.nodes;
 
+import model.message.NOTE;
+import model.message.Notification;
 import model.nodes.RuNode;
+import model.workspace.Workspace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ public abstract class RuNodeComposite extends RuNode {
 
     public void removeChild(RuNode child) {
         children.remove(child);
+        notifySubscriber(new Notification(NOTE.CHILD_REMOVED, child));
     }
 
     public List<RuNode> getChildren() {

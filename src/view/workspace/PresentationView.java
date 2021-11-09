@@ -2,6 +2,7 @@ package view.workspace;
 
 import model.message.NOTE;
 import model.message.Notification;
+import model.nodes.RuNode;
 import model.workspace.Presentation;
 import model.workspace.Slide;
 import observer.ISubscriber;
@@ -21,6 +22,7 @@ public class PresentationView extends JPanel implements ISubscriber {
     private Presentation presentation;
     private List<SlideView> slides;
     private JPanel jPanel;
+    private JLabel author;
 
     public PresentationView(Presentation presentation) {
 
@@ -31,13 +33,16 @@ public class PresentationView extends JPanel implements ISubscriber {
         jPanel = new JPanel();
         jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
         JScrollPane jScrollPane = new JScrollPane(jPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
 
-        JLabel author = new JLabel(presentation.getAuthor());
+        author = new JLabel(presentation.getAuthor());
         add(author, BorderLayout.NORTH);
         add(jScrollPane, BorderLayout.CENTER);
-        for (SlideView slide : slides) {
-            jPanel.add(slide);
+        for (RuNode node : presentation.getChildren()) {
+            Slide slide = (Slide) node;
+            SlideView slideView = new SlideView(slide, new Dimension(900, 600));
+            jPanel.add(slideView);
         }
 
 
@@ -52,7 +57,7 @@ public class PresentationView extends JPanel implements ISubscriber {
 
             case CHILD_ADDED: {
                 Slide slide = (Slide) notification.getPayload();
-                SlideView slideView = new SlideView(slide, new Dimension(1000, 500));
+                SlideView slideView = new SlideView(slide, new Dimension(900,600));
                 slides.add(slideView);
                 jPanel.add(slideView);
                 jPanel.add(Box.createVerticalStrut(50));
@@ -60,8 +65,27 @@ public class PresentationView extends JPanel implements ISubscriber {
                 break;
 
             }
+            case CHILD_REMOVED: {
+                Slide slide = (Slide) notification.getPayload();
+                int index = 0;
+                for (Component c : jPanel.getComponents()) {
+
+                    if (!(c instanceof SlideView)) continue;
+                    SlideView tmp = (SlideView) c;
+                    if (tmp.getSlide().getId() == slide.getId()) {
+                        break;
+                    }
+                    index++;
+                }
+
+                jPanel.remove(index);
+                jPanel.remove(index);
+                jPanel.validate();
+                break;
+            }
             case AUTHOR_CHANGED: {
                 String newAuthor = (String) notification.getPayload();
+                author.setText(newAuthor);
                 break;
 
             }

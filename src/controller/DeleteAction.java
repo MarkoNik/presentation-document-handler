@@ -10,6 +10,7 @@ import view.MainFrame;
 import view.gui.tree.model.RuTreeNode;
 
 import javax.swing.*;
+import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 
 public class DeleteAction extends AbstractRudokAction {
@@ -26,19 +27,21 @@ public class DeleteAction extends AbstractRudokAction {
         RuTreeNode viewNode = (RuTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
         RuNode modelNode = viewNode.getNode();
 
-        if (!(modelNode instanceof Workspace)) {
-            RuNode modelParent = modelNode.getParent();
-            RuTreeNode viewParent = (RuTreeNode) viewNode.getParent();
+        if (modelNode instanceof Workspace) {
 
-            ((RuNodeComposite) modelParent).removeChild(modelNode);
-            viewParent.remove(viewNode);
-
-            SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getTree());
-        }
-
-        else {
             //TODO error ne moze delete Workspace
+            return;
+
         }
+
+        RuNode modelParent = modelNode.getParent();
+        RuTreeNode viewParent = (RuTreeNode) viewNode.getParent();
+
+        ((RuNodeComposite) modelParent).removeChild(modelNode);
+        viewParent.remove(viewNode);
+        MainFrame.getInstance().getTree().setSelectionPath(new TreePath(viewParent.getPath()));
+
+        SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getTree());
 
     }
 }

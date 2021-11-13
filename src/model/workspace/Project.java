@@ -27,6 +27,9 @@ public class Project extends RuNodeComposite {
         maxChild++;
     }
 
-
-
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+        notifySubscriber(new Notification(NOTE.NAME_CHANGED, name));
+    }
 }

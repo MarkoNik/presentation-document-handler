@@ -44,4 +44,9 @@ public class Presentation extends RuNodeComposite {
     }
 
 
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+        getParent().notifySubscriber(new Notification(NOTE.PRESENTATION_NAME_CHANGED, null));
+    }
 }

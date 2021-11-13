@@ -42,6 +42,18 @@ public class ProjectView extends JPanel implements ISubscriber {
                 project = null;
                 name.setText("");
                 jTabbedPane.removeAll();
+                break;
+            }
+
+            case NAME_CHANGED: {
+                String name = (String) notification.getPayload();
+                this.name.setText(name);
+                break;
+            }
+
+            case PRESENTATION_NAME_CHANGED: {
+                loadTabs();
+
             }
         }
     }
@@ -53,6 +65,11 @@ public class ProjectView extends JPanel implements ISubscriber {
         name.setText(this.project.getName());
         add(name, BorderLayout.NORTH);
         add(jTabbedPane, BorderLayout.CENTER);
+        loadTabs();
+        jTabbedPane.validate();
+    }
+
+    private void loadTabs() {
 
         jTabbedPane.removeAll();
         for (RuNode p : this.project.getChildren()) {
@@ -60,10 +77,6 @@ public class ProjectView extends JPanel implements ISubscriber {
             PresentationView presentationView = new PresentationView(presentation);
             jTabbedPane.addTab(presentation.getName(), presentationView);
         }
-
-        jTabbedPane.validate();
     }
-
-
 
 }

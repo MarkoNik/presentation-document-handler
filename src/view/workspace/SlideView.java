@@ -10,17 +10,14 @@ public class SlideView extends JPanel {
     private Slide slide;
     private Image backgroundImage;
 
-    public SlideView(Slide slide, Dimension d) {
+    public SlideView(Slide slide, Dimension d, Image backgroundImage) {
         this.slide = slide;
+        this.backgroundImage = backgroundImage;
         setSize(d);
         setPreferredSize(d);
         setMinimumSize(d);
         setMaximumSize(d);
         setAlignmentX(CENTER_ALIGNMENT);
-        this.backgroundImage = new ImageIcon(getClass()
-                .getResource("v975-background-07-b-kqkr4ukm.jpg"))
-                .getImage();
-        backgroundImage = backgroundImage.getScaledInstance(900, 600, Image.SCALE_SMOOTH);
     }
 
     public void setBackgroundImage(Image backgroundImage) {

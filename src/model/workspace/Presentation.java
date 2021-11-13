@@ -49,4 +49,13 @@ public class Presentation extends RuNodeComposite {
         super.setName(name);
         getParent().notifySubscriber(new Notification(NOTE.PRESENTATION_NAME_CHANGED, null));
     }
+
+    public String getBackgroundPath() {
+        return backgroundPath;
+    }
+
+    public void setBackgroundPath(String backgroundPath) {
+        this.backgroundPath = backgroundPath;
+        notifySubscriber(new Notification(NOTE.THEME_CHANGED, backgroundPath));
+    }
 }

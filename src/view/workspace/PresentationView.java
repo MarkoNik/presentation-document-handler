@@ -6,16 +6,12 @@ import model.nodes.RuNode;
 import model.workspace.Presentation;
 import model.workspace.Slide;
 import observer.ISubscriber;
-import view.MainFrame;
-import view.gui.tree.model.RuTreeNode;
 
 import javax.swing.*;
-import javax.swing.tree.TreeNode;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.concurrent.Flow;
+import java.util.Objects;
 
 public class PresentationView extends JPanel implements ISubscriber {
 
@@ -23,10 +19,12 @@ public class PresentationView extends JPanel implements ISubscriber {
     private List<SlideView> slides;
     private JPanel jPanel;
     private JLabel author;
+    private Image backgroundImage;
 
     public PresentationView(Presentation presentation) {
 
         setLayout(new BorderLayout());
+        this.presentation = presentation;
 
         presentation.addSubscriber(this);
         slides = new ArrayList<>();
@@ -35,17 +33,27 @@ public class PresentationView extends JPanel implements ISubscriber {
         JScrollPane jScrollPane = new JScrollPane(jPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
+        setBackGroundImage("autumn.jpg");
+
 
         author = new JLabel(presentation.getAuthor());
         add(author, BorderLayout.NORTH);
         add(jScrollPane, BorderLayout.CENTER);
         for (RuNode node : presentation.getChildren()) {
             Slide slide = (Slide) node;
-            SlideView slideView = new SlideView(slide, new Dimension(900, 600));
+            SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage);
             jPanel.add(slideView);
+            jPanel.add(Box.createVerticalStrut(50));
         }
 
 
+    }
+
+    private void setBackGroundImage(String path) {
+
+        System.out.println(path);
+        this.backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("themes/" + path))).getImage();
+        backgroundImage = backgroundImage.getScaledInstance(900, 600, Image.SCALE_SMOOTH);
     }
 
 
@@ -57,7 +65,7 @@ public class PresentationView extends JPanel implements ISubscriber {
 
             case CHILD_ADDED: {
                 Slide slide = (Slide) notification.getPayload();
-                SlideView slideView = new SlideView(slide, new Dimension(900,600));
+                SlideView slideView = new SlideView(slide, new Dimension(900,600), backgroundImage);
                 slides.add(slideView);
                 jPanel.add(slideView);
                 jPanel.add(Box.createVerticalStrut(50));
@@ -88,6 +96,18 @@ public class PresentationView extends JPanel implements ISubscriber {
                 author.setText(newAuthor);
                 break;
 
+            }
+
+            case THEME_CHANGED: {
+                String newPath = (String) notification.getPayload();
+                setBackGroundImage(newPath);
+                jPanel.removeAll();
+                for (RuNode node : presentation.getChildren()) {
+                    Slide slide = (Slide) node;
+                    SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage);
+                    jPanel.add(slideView);
+                    jPanel.add(Box.createVerticalStrut(50));
+                }
             }
         }
 

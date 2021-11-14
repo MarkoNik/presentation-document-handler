@@ -20,6 +20,11 @@ public class ChangeAuthorAction extends AbstractRudokAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         RuTreeNode viewNode = (RuTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
+        if (viewNode == null) {
+            ErrorFactory.generate(ERROR.NODE_NOT_SELECTED).setVisible(true);
+            return;
+        }
+
         if (! (viewNode.getNode() instanceof Presentation)) {
             ErrorFactory.generate(ERROR.PRESENTATION_NOT_SELECTED).setVisible(true);
             return;

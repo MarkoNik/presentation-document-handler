@@ -1,5 +1,7 @@
 package controller;
 
+import model.error.ERROR;
+import model.error.ErrorFactory;
 import model.nodes.RuNode;
 import model.workspace.Presentation;
 import view.MainFrame;
@@ -19,6 +21,11 @@ public class ChangeAuthorAction extends AbstractRudokAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         RuTreeNode viewNode = (RuTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
+        if (! (viewNode.getNode() instanceof Presentation)) {
+            ErrorFactory.generate(ERROR.PRESENTATION_NOT_SELECTED).setVisible(true);
+            return;
+        }
+
         RuNode node = viewNode.getNode();
         if (node instanceof Presentation) {
             ChangeAuthorDialog dialog = new ChangeAuthorDialog();

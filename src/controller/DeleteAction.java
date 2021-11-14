@@ -1,5 +1,7 @@
 package controller;
 
+import model.error.ERROR;
+import model.error.ErrorFactory;
 import model.nodes.RuNode;
 import model.nodes.RuNodeComposite;
 import model.workspace.Presentation;
@@ -25,13 +27,15 @@ public class DeleteAction extends AbstractRudokAction {
     public void actionPerformed(ActionEvent e) {
 
         RuTreeNode viewNode = (RuTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
-        RuNode modelNode = viewNode.getNode();
-
-        if (modelNode instanceof Workspace) {
-
-            //TODO error ne moze delete Workspace
+        if (viewNode == null) {
+            ErrorFactory.generate(ERROR.NODE_NOT_SELECTED).setVisible(true);
             return;
+        }
 
+        RuNode modelNode = viewNode.getNode();
+        if (modelNode instanceof Workspace) {
+            ErrorFactory.generate(ERROR.DELETE_WORKSPACE).setVisible(true);
+            return;
         }
 
         RuNode modelParent = modelNode.getParent();

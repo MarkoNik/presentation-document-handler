@@ -1,5 +1,7 @@
 package view.gui.tree.controller;
 
+import model.error.ERROR;
+import model.error.ErrorFactory;
 import view.gui.tree.model.RuTreeNode;
 
 import javax.swing.*;
@@ -45,6 +47,10 @@ public class RuTreeCellEditor extends DefaultTreeCellEditor implements ActionLis
 
         RuTreeNode clicked = (RuTreeNode) clickedOn;
 
+        if (e.getActionCommand().isBlank()) {
+            ErrorFactory.generate(ERROR.BLANK_NAME).setVisible(true);
+            return;
+        }
 
         clicked.setName(e.getActionCommand());
         (clicked.getNode()).setName(e.getActionCommand());

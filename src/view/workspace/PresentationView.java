@@ -1,5 +1,7 @@
 package view.workspace;
 
+import model.error.ERROR;
+import model.error.ErrorFactory;
 import model.message.NOTE;
 import model.message.Notification;
 import model.nodes.RuNode;
@@ -51,9 +53,13 @@ public class PresentationView extends JPanel implements ISubscriber {
 
     private void setBackGroundImage(String path) {
 
-        System.out.println(path);
-        this.backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("themes/" + path))).getImage();
-        backgroundImage = backgroundImage.getScaledInstance(900, 600, Image.SCALE_SMOOTH);
+        try {
+            this.backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("themes/" + path))).getImage();
+            backgroundImage = backgroundImage.getScaledInstance(900, 600, Image.SCALE_SMOOTH);
+
+        } catch (Exception e) {
+            ErrorFactory.generate(model.error.ERROR.WRONG_PATH).setVisible(true);
+        }
     }
 
 

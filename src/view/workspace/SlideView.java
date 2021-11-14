@@ -20,16 +20,8 @@ public class SlideView extends JPanel {
         setAlignmentX(CENTER_ALIGNMENT);
     }
 
-    public void setBackgroundImage(Image backgroundImage) {
-        //this.backgroundImage = backgroundImage;
-    }
-
     public Slide getSlide() {
         return slide;
-    }
-
-    public void setSlide(Slide slide) {
-        this.slide = slide;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package model.nodes;
 
-import model.message.NOTE;
 import model.message.Notification;
 import observer.IPublisher;
 import observer.ISubscriber;

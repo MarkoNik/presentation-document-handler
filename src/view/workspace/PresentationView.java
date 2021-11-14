@@ -1,6 +1,4 @@
 package view.workspace;
-
-import model.error.ERROR;
 import model.error.ErrorFactory;
 import model.message.NOTE;
 import model.message.Notification;

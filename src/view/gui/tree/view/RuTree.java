@@ -1,7 +1,5 @@
 package view.gui.tree.view;
 
-import model.nodes.RuNode;
-import view.MainFrame;
 import view.gui.tree.controller.RuTreeCellEditor;
 import view.gui.tree.controller.RuTreeSelectionListener;
 import view.gui.tree.model.RuTreeNode;

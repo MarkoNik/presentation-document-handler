@@ -6,10 +6,8 @@ import model.nodes.RuNode;
 import model.workspace.Presentation;
 import model.workspace.Project;
 import observer.ISubscriber;
-import view.MainFrame;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class ProjectView extends JPanel implements ISubscriber {

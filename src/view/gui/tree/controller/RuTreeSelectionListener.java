@@ -1,6 +1,5 @@
 package view.gui.tree.controller;
 
-import main.Main;
 import model.workspace.Project;
 import view.MainFrame;
 import view.gui.tree.model.RuTreeNode;

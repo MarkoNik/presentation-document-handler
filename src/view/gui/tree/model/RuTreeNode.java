@@ -1,10 +1,8 @@
 package view.gui.tree.model;
 
 import model.nodes.RuNode;
-import model.nodes.RuNodeComposite;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 
 public class RuTreeNode extends DefaultMutableTreeNode {
 

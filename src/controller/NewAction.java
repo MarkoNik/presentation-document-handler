@@ -1,6 +1,5 @@
 package controller;
 
-import main.Main;
 import model.error.ERROR;
 import model.error.ErrorFactory;
 import model.nodes.RuNode;

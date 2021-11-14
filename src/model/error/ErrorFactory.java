@@ -1,7 +1,5 @@
 package model.error;
 
-import observer.IPublisher;
-
 public class ErrorFactory {
 
     public static UserError generate(ERROR error) {

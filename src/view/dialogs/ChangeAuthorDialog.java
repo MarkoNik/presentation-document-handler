@@ -1,5 +1,6 @@
 package view.dialogs;
 
+import model.error.ErrorFactory;
 import model.nodes.RuNode;
 import model.workspace.Presentation;
 import view.MainFrame;
@@ -33,7 +34,7 @@ public class ChangeAuthorDialog extends JDialog {
             }
             RuNode node = viewNode.getNode();
             if (input.getText().isBlank()) {
-                //TODO error
+                ErrorFactory.generate(model.error.ERROR.BLANK_NAME).setVisible(true);
                 return;
             }
 

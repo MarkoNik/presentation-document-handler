@@ -1,12 +1,10 @@
 package view;
 
 import controller.ActionManager;
-import model.workspace.Slide;
 import model.workspace.Workspace;
 import view.gui.tree.model.RuTreeNode;
 import view.gui.tree.view.RuTree;
 import view.workspace.ProjectView;
-import view.workspace.SlideView;
 
 import javax.swing.*;
 import java.awt.*;

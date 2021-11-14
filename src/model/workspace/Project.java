@@ -4,11 +4,6 @@ import model.message.NOTE;
 import model.message.Notification;
 import model.nodes.RuNode;
 import model.nodes.RuNodeComposite;
-import observer.IPublisher;
-import observer.ISubscriber;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Project extends RuNodeComposite {
 

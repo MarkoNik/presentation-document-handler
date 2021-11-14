@@ -2,8 +2,6 @@ package model.nodes;
 
 import model.message.NOTE;
 import model.message.Notification;
-import model.nodes.RuNode;
-import model.workspace.Workspace;
 
 import java.util.ArrayList;
 import java.util.List;

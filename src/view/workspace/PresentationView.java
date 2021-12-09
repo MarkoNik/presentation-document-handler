@@ -17,7 +17,7 @@ public class PresentationView extends JPanel implements ISubscriber {
 
     private Presentation presentation;
     private List<SlideView> slides;
-    private JPanel jPanel;
+    private JPanel jPanel, navPanel;
     private JLabel author;
     private Image backgroundImage;
 
@@ -33,17 +33,26 @@ public class PresentationView extends JPanel implements ISubscriber {
         JScrollPane jScrollPane = new JScrollPane(jPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
+        navPanel = new JPanel();
+        navPanel.setLayout(new BoxLayout(navPanel, BoxLayout.Y_AXIS));
+        JScrollPane navigator = new JScrollPane(navPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        navigator.getVerticalScrollBar().setUnitIncrement(8);
+
         setBackGroundImage("autumn.jpg");
 
 
         author = new JLabel(presentation.getAuthor());
         add(author, BorderLayout.NORTH);
+        add(navigator, BorderLayout.WEST);
         add(jScrollPane, BorderLayout.CENTER);
         for (RuNode node : presentation.getChildren()) {
             Slide slide = (Slide) node;
             SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage);
+            SlideView slideNav = new SlideView(slide, new Dimension(150, 100), backgroundImage);
             jPanel.add(slideView);
+            navPanel.add(slideNav);
             jPanel.add(Box.createVerticalStrut(50));
+            navPanel.add(Box.createVerticalStrut(25));
         }
 
 
@@ -70,9 +79,12 @@ public class PresentationView extends JPanel implements ISubscriber {
             case CHILD_ADDED: {
                 Slide slide = (Slide) notification.getPayload();
                 SlideView slideView = new SlideView(slide, new Dimension(900,600), backgroundImage);
+                SlideView slideNav = new SlideView(slide, new Dimension(150,100), backgroundImage);
                 slides.add(slideView);
                 jPanel.add(slideView);
                 jPanel.add(Box.createVerticalStrut(50));
+                navPanel.add(slideNav);
+                navPanel.add(Box.createVerticalStrut(25));
                 validate();
                 break;
 
@@ -93,6 +105,23 @@ public class PresentationView extends JPanel implements ISubscriber {
                 jPanel.remove(index);
                 jPanel.remove(index);
                 jPanel.validate();
+
+                index = 0;
+                for (Component c : navPanel.getComponents()) {
+
+                    if (!(c instanceof SlideView)) continue;
+                    SlideView tmp = (SlideView) c;
+                    if (tmp.getSlide().getId() == slide.getId()) {
+                        break;
+                    }
+                    index++;
+                }
+
+                navPanel.remove(index);
+                navPanel.remove(index);
+                navPanel.validate();
+
+                validate();
                 break;
             }
             case AUTHOR_CHANGED: {
@@ -112,6 +141,15 @@ public class PresentationView extends JPanel implements ISubscriber {
                     jPanel.add(slideView);
                     jPanel.add(Box.createVerticalStrut(50));
                 }
+
+                navPanel.removeAll();
+                for (RuNode node : presentation.getChildren()) {
+                    Slide slide = (Slide) node;
+                    SlideView slideView = new SlideView(slide, new Dimension(150, 100), backgroundImage);
+                    navPanel.add(slideView);
+                    navPanel.add(Box.createVerticalStrut(25));
+                }
+                validate();
             }
         }
 

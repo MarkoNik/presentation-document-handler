@@ -6,6 +6,8 @@ import model.nodes.RuNode;
 import model.workspace.Presentation;
 import model.workspace.Slide;
 import observer.ISubscriber;
+import state.slot.SlotStateManager;
+import view.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +20,11 @@ public class PresentationView extends JPanel implements ISubscriber {
     private Presentation presentation;
     private List<SlideView> slides;
     private JPanel jPanel, navPanel;
+    private JToolBar toolBar;
     private JLabel author;
     private Image backgroundImage;
+
+    private SlotStateManager stateManager;
 
     public PresentationView(Presentation presentation) {
 
@@ -38,13 +43,20 @@ public class PresentationView extends JPanel implements ISubscriber {
         JScrollPane navigator = new JScrollPane(navPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         navigator.getVerticalScrollBar().setUnitIncrement(8);
 
+        toolBar = new JToolBar();
+        toolBar.add(MainFrame.getInstance().getActionManager().getCreateSlotAction());
+        toolBar.add(MainFrame.getInstance().getActionManager().getDeleteSlotAction());
+        toolBar.add(MainFrame.getInstance().getActionManager().getMoveSlotAction());
+
+
         setBackGroundImage("autumn.jpg");
 
 
         author = new JLabel(presentation.getAuthor());
-        add(author, BorderLayout.NORTH);
+        add(toolBar, BorderLayout.NORTH);
         add(navigator, BorderLayout.WEST);
         add(jScrollPane, BorderLayout.CENTER);
+        add(author, BorderLayout.SOUTH);
         for (RuNode node : presentation.getChildren()) {
             Slide slide = (Slide) node;
             SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage);
@@ -61,9 +73,9 @@ public class PresentationView extends JPanel implements ISubscriber {
     private void setBackGroundImage(String path) {
 
         try {
+
             this.backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("themes/" + path))).getImage();
             backgroundImage = backgroundImage.getScaledInstance(900, 600, Image.SCALE_SMOOTH);
-
         } catch (Exception e) {
             ErrorFactory.generate(model.error.ERROR.WRONG_PATH).setVisible(true);
         }
@@ -156,5 +168,9 @@ public class PresentationView extends JPanel implements ISubscriber {
         }
 
 
+    }
+
+    public SlotStateManager getStateManager() {
+        return stateManager;
     }
 }

@@ -13,7 +13,6 @@ public class MainFrame extends JFrame {
 
     private static MainFrame instance = null;
     private Menu menu;
-    private Toolbar toolbar;
     private ActionManager actionManager;
     private JPanel desktop;
     private JSplitPane split;
@@ -88,10 +87,6 @@ public class MainFrame extends JFrame {
 
     public void setTree(RuTree tree) {
         this.tree = tree;
-    }
-
-    public JSplitPane getSplit() {
-        return split;
     }
 
     public JPanel getWorkspace() {

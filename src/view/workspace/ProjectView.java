@@ -77,4 +77,7 @@ public class ProjectView extends JPanel implements ISubscriber {
         }
     }
 
+    public JTabbedPane getjTabbedPane() {
+        return jTabbedPane;
+    }
 }

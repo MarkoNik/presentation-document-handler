@@ -7,6 +7,9 @@ public class ActionManager {
     private InfoAction infoAction;
     private ChangeAuthorAction changeAuthorAction;
     private ChangeThemeAction changeThemeAction;
+    private CreateSlotAction createSlotAction;
+    private DeleteSlotAction deleteSlotAction;
+    private MoveSlotAction moveSlotAction;
 
     public ActionManager() {
         init();
@@ -18,45 +21,40 @@ public class ActionManager {
         infoAction = new InfoAction();
         changeAuthorAction = new ChangeAuthorAction();
         changeThemeAction = new ChangeThemeAction();
+        createSlotAction = new CreateSlotAction();
+        deleteSlotAction = new DeleteSlotAction();
+        moveSlotAction = new MoveSlotAction();
     }
 
     public NewAction getNewAction() {
         return newAction;
     }
 
-    public void setNewAction(NewAction newAction) {
-        this.newAction = newAction;
-    }
-
     public InfoAction getInfoAction() {
         return infoAction;
-    }
-
-    public void setInfoAction(InfoAction infoAction) {
-        this.infoAction = infoAction;
     }
 
     public ChangeAuthorAction getChangeAuthorAction() {
         return changeAuthorAction;
     }
 
-    public void setChangeAuthorAction(ChangeAuthorAction changeAuthorAction) {
-        this.changeAuthorAction = changeAuthorAction;
-    }
-
     public ChangeThemeAction getChangeThemeAction() {
         return changeThemeAction;
-    }
-
-    public void setChangeThemeAction(ChangeThemeAction changeThemeAction) {
-        this.changeThemeAction = changeThemeAction;
     }
 
     public DeleteAction getDeleteAction() {
         return deleteAction;
     }
 
-    public void setDeleteAction(DeleteAction deleteAction) {
-        this.deleteAction = deleteAction;
+    public CreateSlotAction getCreateSlotAction() {
+        return createSlotAction;
+    }
+
+    public DeleteSlotAction getDeleteSlotAction() {
+        return deleteSlotAction;
+    }
+
+    public MoveSlotAction getMoveSlotAction() {
+        return moveSlotAction;
     }
 }

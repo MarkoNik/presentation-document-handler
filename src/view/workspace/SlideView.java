@@ -1,11 +1,13 @@
 package view.workspace;
 
+import model.message.Notification;
 import model.workspace.Slide;
+import observer.ISubscriber;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SlideView extends JPanel {
+public class SlideView extends JPanel implements ISubscriber {
 
     private Slide slide;
     private Image backgroundImage;
@@ -17,6 +19,7 @@ public class SlideView extends JPanel {
         setPreferredSize(d);
         setMinimumSize(d);
         setMaximumSize(d);
+        slide.addSubscriber(this);
         setAlignmentX(CENTER_ALIGNMENT);
     }
 
@@ -28,5 +31,10 @@ public class SlideView extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+    }
+
+    @Override
+    public void update(Notification notification) {
+
     }
 }

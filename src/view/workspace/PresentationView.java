@@ -97,6 +97,7 @@ public class PresentationView extends JPanel implements ISubscriber {
                     if (!(c instanceof SlideView)) continue;
                     SlideView tmp = (SlideView) c;
                     if (tmp.getSlide().getId() == slide.getId()) {
+                        slide.removeSubscriber(tmp);
                         break;
                     }
                     index++;
@@ -112,6 +113,7 @@ public class PresentationView extends JPanel implements ISubscriber {
                     if (!(c instanceof SlideView)) continue;
                     SlideView tmp = (SlideView) c;
                     if (tmp.getSlide().getId() == slide.getId()) {
+                        slide.removeSubscriber(tmp);
                         break;
                     }
                     index++;

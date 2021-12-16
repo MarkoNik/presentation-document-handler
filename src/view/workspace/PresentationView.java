@@ -6,8 +6,10 @@ import model.nodes.RuNode;
 import model.workspace.Presentation;
 import model.workspace.Slide;
 import observer.ISubscriber;
+import state.presentation.PresentationStateManager;
 import state.slot.SlotStateManager;
-import view.MainFrame;
+import view.workspace.panels.AbstractPresentationPanel;
+import view.workspace.panels.EditPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,63 +21,34 @@ import java.util.Objects;
 public class PresentationView extends JPanel implements ISubscriber {
 
     private Presentation presentation;
-    private List<SlideView> slides;
-    private JPanel jPanel, navPanel;
-    private JToolBar toolBar;
+    private AbstractPresentationPanel canvas;
     private JLabel author;
     private Image backgroundImage;
 
     private SlotStateManager slotStateManager;
+    private PresentationStateManager presentationStateManager;
 
     public PresentationView(Presentation presentation) {
 
-        slotStateManager = new SlotStateManager();
-        setLayout(new BorderLayout());
         this.presentation = presentation;
-
+        slotStateManager = new SlotStateManager();
+        presentationStateManager = new PresentationStateManager();
         presentation.addSubscriber(this);
-        slides = new ArrayList<>();
-        jPanel = new JPanel();
-        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
-        JScrollPane jScrollPane = new JScrollPane(jPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane.getVerticalScrollBar().setUnitIncrement(16);
-
-        navPanel = new JPanel();
-        navPanel.setLayout(new BoxLayout(navPanel, BoxLayout.Y_AXIS));
-        JScrollPane navigator = new JScrollPane(navPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        navigator.getVerticalScrollBar().setUnitIncrement(8);
-
-        toolBar = new JToolBar();
-        toolBar.add(MainFrame.getInstance().getActionManager().getCreateSlotAction());
-        toolBar.add(MainFrame.getInstance().getActionManager().getDeleteSlotAction());
-        toolBar.add(MainFrame.getInstance().getActionManager().getMoveSlotAction());
-
-
         setBackGroundImage("autumn.jpg");
 
-
         author = new JLabel(presentation.getAuthor());
-        add(toolBar, BorderLayout.NORTH);
-        add(navigator, BorderLayout.WEST);
-        add(jScrollPane, BorderLayout.CENTER);
+        canvas = new EditPanel();
+
+        reload();
+
+        setLayout(new BorderLayout());
+        add(canvas, BorderLayout.CENTER);
         add(author, BorderLayout.SOUTH);
-        for (RuNode node : presentation.getChildren()) {
-            Slide slide = (Slide) node;
-            SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage, this);
-            SlideView slideNav = new SlideView(slide, new Dimension(150, 100), backgroundImage, this);
-            jPanel.add(slideView);
-            navPanel.add(slideNav);
-            jPanel.add(Box.createVerticalStrut(50));
-            navPanel.add(Box.createVerticalStrut(25));
-        }
-
-
     }
 
     private void setBackGroundImage(String path) {
 
         try {
-
             this.backgroundImage = new ImageIcon(Objects.requireNonNull(getClass().getResource("themes/" + path))).getImage();
             backgroundImage = backgroundImage.getScaledInstance(900, 600, Image.SCALE_SMOOTH);
         } catch (Exception e) {
@@ -88,88 +61,35 @@ public class PresentationView extends JPanel implements ISubscriber {
     public void update(Notification notification) {
 
         NOTE note = notification.getType();
-        switch(note) {
-
-            case CHILD_ADDED: {
+        switch (note) {
+            case CHILD_ADDED -> {
                 Slide slide = (Slide) notification.getPayload();
-                SlideView slideView = new SlideView(slide, new Dimension(900,600), backgroundImage, this);
-                SlideView slideNav = new SlideView(slide, new Dimension(150,100), backgroundImage, this);
-                slides.add(slideView);
-                jPanel.add(slideView);
-                jPanel.add(Box.createVerticalStrut(50));
-                navPanel.add(slideNav);
-                navPanel.add(Box.createVerticalStrut(25));
+                addSlide(slide);
                 validate();
-                break;
-
             }
-            case CHILD_REMOVED: {
+            case CHILD_REMOVED -> {
                 Slide slide = (Slide) notification.getPayload();
-                int index = 0;
-                for (Component c : jPanel.getComponents()) {
-
-                    if (!(c instanceof SlideView)) continue;
-                    SlideView tmp = (SlideView) c;
-                    if (tmp.getSlide().getId() == slide.getId()) {
-                        slide.removeSubscriber(tmp);
-                        break;
-                    }
-                    index++;
-                }
-
-                jPanel.remove(index);
-                jPanel.remove(index);
-                jPanel.validate();
-
-                index = 0;
-                for (Component c : navPanel.getComponents()) {
-
-                    if (!(c instanceof SlideView)) continue;
-                    SlideView tmp = (SlideView) c;
-                    if (tmp.getSlide().getId() == slide.getId()) {
-                        slide.removeSubscriber(tmp);
-                        break;
-                    }
-                    index++;
-                }
-
-                navPanel.remove(index);
-                navPanel.remove(index);
-                navPanel.validate();
-
+                canvas.removeSlide(slide);
                 validate();
-                break;
             }
-            case AUTHOR_CHANGED: {
+            case AUTHOR_CHANGED -> {
                 String newAuthor = (String) notification.getPayload();
                 author.setText(newAuthor);
-                break;
-
             }
-
-            case THEME_CHANGED: {
+            case THEME_CHANGED -> {
                 String newPath = (String) notification.getPayload();
                 setBackGroundImage(newPath);
-                jPanel.removeAll();
-                for (RuNode node : presentation.getChildren()) {
-                    Slide slide = (Slide) node;
-                    SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage, this);
-                    jPanel.add(slideView);
-                    jPanel.add(Box.createVerticalStrut(50));
-                }
-
-                navPanel.removeAll();
-                for (RuNode node : presentation.getChildren()) {
-                    Slide slide = (Slide) node;
-                    SlideView slideView = new SlideView(slide, new Dimension(150, 100), backgroundImage, this);
-                    navPanel.add(slideView);
-                    navPanel.add(Box.createVerticalStrut(25));
-                }
+                canvas.clearSlides();
+                reload();
                 validate();
             }
         }
+    }
 
-
+    private void addSlide(Slide slide) {
+        SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage, this);
+        canvas.addSlide(slideView);
+        canvas.addNavSlide(scaled(slideView));
     }
 
     public void startCreateSlot() {
@@ -181,8 +101,35 @@ public class PresentationView extends JPanel implements ISubscriber {
     public void startMoveSlot() {
         slotStateManager.setMoveState();
     }
-
     public void mousePressed(MouseEvent e, SlideView slideView) {
         slotStateManager.getState().mouseClick(e, slideView);
+    }
+
+    public void startSlideShow() {
+        presentationStateManager.setSlideShowState();
+        changeState();
+    }
+
+    public void startEdit() {
+        presentationStateManager.setEditState();
+        changeState();
+    }
+
+    public void changeState()  {
+        remove(canvas);
+        canvas = presentationStateManager.getPresentationState().initComponent();
+        add(canvas);
+        reload();
+    }
+
+    private void reload() {
+        for (RuNode node : presentation.getChildren()) {
+            addSlide((Slide) node);
+        }
+    }
+
+    private SlideView scaled(SlideView slideView) {
+        Slide slide = slideView.getSlide();
+        return new SlideView(slide, new Dimension(150, 100), backgroundImage, this);
     }
 }

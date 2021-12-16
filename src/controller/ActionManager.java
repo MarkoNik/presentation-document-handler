@@ -2,6 +2,7 @@ package controller;
 
 
 public class ActionManager {
+
     private NewAction newAction;
     private DeleteAction deleteAction;
     private InfoAction infoAction;
@@ -10,6 +11,8 @@ public class ActionManager {
     private CreateSlotAction createSlotAction;
     private DeleteSlotAction deleteSlotAction;
     private MoveSlotAction moveSlotAction;
+    private SlideShowAction slideShowAction;
+    private EditAction editAction;
 
     public ActionManager() {
         init();
@@ -24,6 +27,8 @@ public class ActionManager {
         createSlotAction = new CreateSlotAction();
         deleteSlotAction = new DeleteSlotAction();
         moveSlotAction = new MoveSlotAction();
+        slideShowAction = new SlideShowAction();
+        editAction = new EditAction();
     }
 
     public NewAction getNewAction() {
@@ -56,5 +61,13 @@ public class ActionManager {
 
     public MoveSlotAction getMoveSlotAction() {
         return moveSlotAction;
+    }
+
+    public SlideShowAction getSlideShowAction() {
+        return slideShowAction;
+    }
+
+    public EditAction getEditAction() {
+        return editAction;
     }
 }

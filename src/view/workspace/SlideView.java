@@ -3,6 +3,7 @@ package view.workspace;
 import controller.SlideMouseListener;
 import model.message.NOTE;
 import model.message.Notification;
+import model.nodes.RuNode;
 import model.workspace.Slide;
 import model.workspace.Slot;
 import observer.ISubscriber;
@@ -16,12 +17,15 @@ public class SlideView extends JPanel implements ISubscriber {
 
     private Slide slide;
     private Image backgroundImage;
-    private List <SlotView> slotViewList;
+    private List<SlotView> slotViewList;
     private PresentationView presentationView;
 
     public SlideView(Slide slide, Dimension d, Image backgroundImage, PresentationView presentationView) {
 
         slotViewList = new ArrayList<>();
+        for (Slot slot : slide.getSlots()) {
+            slotViewList.add(new SlotView(slot));
+        }
         this.slide = slide;
         this.backgroundImage = backgroundImage;
         setSize(d);
@@ -56,21 +60,19 @@ public class SlideView extends JPanel implements ISubscriber {
         NOTE note = notification.getType();
         Slot slot = (Slot) notification.getPayload();
         switch (note) {
-            case SLOT_ADDED: {
+            case SLOT_ADDED -> {
                 SlotView slotView = new SlotView(slot);
                 slotViewList.add(slotView);
-                break;
             }
-
-            case SLOT_DELETED: {
+            case SLOT_DELETED -> {
                 int i = 0;
                 for (SlotView sw : slotViewList) {
                     if (sw.getSlot() == slot) {
                         break;
-                    } i++;
+                    }
+                    i++;
                 }
                 slotViewList.remove(i);
-                break;
             }
         }
 

@@ -6,12 +6,14 @@ public class SlotStateManager {
     private CreateState createState;
     private DeleteState deleteState;
     private MoveState moveState;
+    private SleepState sleepState;
 
     public SlotStateManager() {
         createState = new CreateState();
         deleteState = new DeleteState();
         moveState = new MoveState();
-        state = createState;
+        sleepState = new SleepState();
+        state = sleepState;
     }
 
     public void setCreateState() {
@@ -25,6 +27,8 @@ public class SlotStateManager {
     public void setMoveState() {
         state = moveState;
     }
+
+    public void setSleepState() { state = sleepState; }
 
     public SlotState getState() {
         return state;

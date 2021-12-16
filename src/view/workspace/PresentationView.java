@@ -107,6 +107,7 @@ public class PresentationView extends JPanel implements ISubscriber {
 
     public void startSlideShow() {
         presentationStateManager.setSlideShowState();
+        slotStateManager.setSleepState();
         changeState();
     }
 
@@ -120,6 +121,7 @@ public class PresentationView extends JPanel implements ISubscriber {
         canvas = presentationStateManager.getPresentationState().initComponent();
         add(canvas);
         reload();
+        validate();
     }
 
     private void reload() {

@@ -63,4 +63,8 @@ public abstract class RuNode implements IPublisher {
             sub.update(notification);
         }
     }
+
+    public List<ISubscriber> getSubscribers() {
+        return subscribers;
+    }
 }

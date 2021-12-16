@@ -8,11 +8,11 @@ import java.awt.event.MouseEvent;
 
 public class CreateState extends SlotState {
     @Override
-    public void mouseClick(MouseEvent e, SlideView slide) {
+    public void mouseClick(MouseEvent e, SlideView slideView) {
 
         Point pos = e.getPoint();
         Color fill = Color.GREEN;
-        Slot slot = new Slot(pos, Slot.slotDimension, fill, new BasicStroke(2f));
-        slide.getSlide().addSlot(slot);
+        Slot slot = new Slot(pos, Slot.slotDimension, fill, new BasicStroke(5f));
+        slideView.getSlide().addSlot(slot);
     }
 }

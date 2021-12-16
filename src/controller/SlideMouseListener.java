@@ -40,7 +40,7 @@ public class SlideMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        slideView.getPresentationView().mouseDragged(e, slideView);
     }
 
     @Override

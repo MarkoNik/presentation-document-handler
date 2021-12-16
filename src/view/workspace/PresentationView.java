@@ -33,6 +33,8 @@ public class PresentationView extends JPanel implements ISubscriber {
         this.presentation = presentation;
         slotStateManager = new SlotStateManager();
         presentationStateManager = new PresentationStateManager();
+
+        presentation.getSubscribers().clear();
         presentation.addSubscriber(this);
         setBackGroundImage("autumn.jpg");
 
@@ -86,11 +88,6 @@ public class PresentationView extends JPanel implements ISubscriber {
         }
     }
 
-    private void addSlide(Slide slide) {
-        SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage, this);
-        canvas.addSlide(slideView);
-        canvas.addNavSlide(scaled(slideView));
-    }
 
     public void startCreateSlot() {
         slotStateManager.setCreateState();
@@ -103,6 +100,9 @@ public class PresentationView extends JPanel implements ISubscriber {
     }
     public void mousePressed(MouseEvent e, SlideView slideView) {
         slotStateManager.getState().mouseClick(e, slideView);
+    }
+    public void mouseDragged(MouseEvent e, SlideView slideView) {
+        slotStateManager.getState().mouseDrag(e, slideView);
     }
 
     public void startSlideShow() {
@@ -128,8 +128,22 @@ public class PresentationView extends JPanel implements ISubscriber {
         }
     }
 
+    private void addSlide(Slide slide) {
+        SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage, this);
+        canvas.addSlide(slideView);
+        canvas.addNavSlide(scaled(slideView));
+    }
+
     private SlideView scaled(SlideView slideView) {
         Slide slide = slideView.getSlide();
         return new SlideView(slide, new Dimension(150, 100), backgroundImage, this);
+    }
+
+    public Presentation getPresentation() {
+        return presentation;
+    }
+
+    public void setPresentation(Presentation presentation) {
+        this.presentation = presentation;
     }
 }

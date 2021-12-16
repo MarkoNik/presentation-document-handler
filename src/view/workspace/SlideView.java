@@ -25,6 +25,7 @@ public class SlideView extends JPanel implements ISubscriber {
         slotViewList = new ArrayList<>();
         for (Slot slot : slide.getSlots()) {
             slotViewList.add(new SlotView(slot));
+            slot.addSubscriber(this);
         }
         this.slide = slide;
         this.backgroundImage = backgroundImage;
@@ -35,7 +36,10 @@ public class SlideView extends JPanel implements ISubscriber {
         slide.addSubscriber(this);
         setAlignmentX(CENTER_ALIGNMENT);
         this.presentationView = presentationView;
-        addMouseListener(new SlideMouseListener(this));
+
+        SlideMouseListener slideMouseListener = new SlideMouseListener(this);
+        addMouseListener(slideMouseListener);
+        addMouseMotionListener(slideMouseListener);
     }
 
     public Slide getSlide() {
@@ -61,10 +65,12 @@ public class SlideView extends JPanel implements ISubscriber {
         Slot slot = (Slot) notification.getPayload();
         switch (note) {
             case SLOT_ADDED -> {
+                slot.addSubscriber(this);
                 SlotView slotView = new SlotView(slot);
                 slotViewList.add(slotView);
             }
             case SLOT_DELETED -> {
+                slot.removeSubscriber(this);
                 int i = 0;
                 for (SlotView sw : slotViewList) {
                     if (sw.getSlot() == slot) {

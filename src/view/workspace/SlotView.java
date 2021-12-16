@@ -23,7 +23,9 @@ public class SlotView extends JPanel {
         g.setPaint(slot.getColor());
         g.fillRect(x, y, w, h);
 
-        g.setPaint(Color.WHITE);
+        g.setPaint(Color.BLACK);
+        if (slot.isSelected()) g.setPaint(Color.RED);
+
         g.drawRect(x, y, w, h);
     }
 

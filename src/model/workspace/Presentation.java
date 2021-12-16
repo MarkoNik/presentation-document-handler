@@ -10,6 +10,7 @@ public class Presentation extends RuNodeComposite {
 
     private String author;
     private String backgroundPath;
+    private Slot selectedSlot;
 
 
     public Presentation(String name, RuNode parent, String author) {
@@ -57,5 +58,13 @@ public class Presentation extends RuNodeComposite {
     public void setBackgroundPath(String backgroundPath) {
         this.backgroundPath = backgroundPath;
         notifySubscriber(new Notification(NOTE.THEME_CHANGED, backgroundPath));
+    }
+
+    public Slot getSelectedSlot() {
+        return selectedSlot;
+    }
+
+    public void setSelectedSlot(Slot selectedSlot) {
+        this.selectedSlot = selectedSlot;
     }
 }

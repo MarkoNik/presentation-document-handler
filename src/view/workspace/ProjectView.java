@@ -5,6 +5,8 @@ import model.message.Notification;
 import model.nodes.RuNode;
 import model.workspace.Presentation;
 import model.workspace.Project;
+import model.workspace.Slide;
+import model.workspace.Slot;
 import observer.ISubscriber;
 
 import javax.swing.*;
@@ -26,33 +28,23 @@ public class ProjectView extends JPanel implements ISubscriber {
     @Override
     public void update(Notification notification) {
         NOTE note = notification.getType();
-        switch(note) {
-
-            case CHILD_ADDED: {
+        switch (note) {
+            case CHILD_ADDED -> {
                 Presentation presentation = (Presentation) notification.getPayload();
                 PresentationView presentationView = new PresentationView(presentation);
                 jTabbedPane.addTab(presentation.getName(), presentationView);
                 jTabbedPane.validate();
-                break;
             }
-
-            case NODE_REMOVED: {
+            case NODE_REMOVED -> {
                 project = null;
                 name.setText("");
                 jTabbedPane.removeAll();
-                break;
             }
-
-            case NAME_CHANGED: {
+            case NAME_CHANGED -> {
                 String name = (String) notification.getPayload();
                 this.name.setText(name);
-                break;
             }
-
-            case PRESENTATION_NAME_CHANGED: {
-                loadTabs();
-
-            }
+            case PRESENTATION_NAME_CHANGED -> loadTabs();
         }
     }
 
@@ -72,8 +64,18 @@ public class ProjectView extends JPanel implements ISubscriber {
         jTabbedPane.removeAll();
         for (RuNode p : this.project.getChildren()) {
             Presentation presentation = (Presentation) p;
+
+            // brise sve subscribere od slotova kad promeni projekat
+            for (RuNode q : presentation.getChildren()) {
+                for(Slot s : ((Slide)q).getSlots()) {
+                    s.getSubscribers().clear();
+                }
+            }
+
             PresentationView presentationView = new PresentationView(presentation);
             jTabbedPane.addTab(presentation.getName(), presentationView);
+
+
         }
     }
 

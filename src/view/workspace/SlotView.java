@@ -36,4 +36,8 @@ public class SlotView extends JPanel {
 
         return x <= p.x && p.x <= x + w && y <= p.y && p.y <= y + h;
     }
+
+    public Slot getSlot() {
+        return slot;
+    }
 }

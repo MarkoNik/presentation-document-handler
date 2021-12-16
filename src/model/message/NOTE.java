@@ -9,4 +9,6 @@ public enum NOTE {
     NODE_REMOVED,
     PRESENTATION_NAME_CHANGED,
     SLOT_ADDED,
+    SLOT_DELETED,
+
 }

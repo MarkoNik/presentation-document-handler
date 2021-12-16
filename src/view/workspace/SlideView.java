@@ -54,14 +54,27 @@ public class SlideView extends JPanel implements ISubscriber {
     public void update(Notification notification) {
 
         NOTE note = notification.getType();
+        Slot slot = (Slot) notification.getPayload();
         switch (note) {
             case SLOT_ADDED: {
-                Slot slot = (Slot) notification.getPayload();
                 SlotView slotView = new SlotView(slot);
                 slotViewList.add(slotView);
-                repaint();
+                break;
+            }
+
+            case SLOT_DELETED: {
+                int i = 0;
+                for (SlotView sw : slotViewList) {
+                    if (sw.getSlot() == slot) {
+                        break;
+                    } i++;
+                }
+                slotViewList.remove(i);
+                break;
             }
         }
+
+        repaint();
     }
 
     public PresentationView getPresentationView() {

@@ -30,6 +30,11 @@ public class Slide extends RuNode {
         notifySubscriber(new Notification(NOTE.SLOT_ADDED, slot));
     }
 
+    public void removeSlot(Slot slot) {
+        slots.remove(slot);
+        notifySubscriber(new Notification(NOTE.SLOT_DELETED, slot));
+    }
+
     public List<Slot> getSlots() {
         return slots;
     }

@@ -16,6 +16,6 @@ public class DeleteSlotAction extends AbstractRudokAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         ((PresentationView) MainFrame.getInstance().getProjectView().getjTabbedPane().getSelectedComponent())
-                .getStateManager().setDeleteState();
+                .startDeleteSlot();
     }
 }

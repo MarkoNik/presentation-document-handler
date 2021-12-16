@@ -1,8 +1,10 @@
 package view.workspace;
 
 import controller.SlideMouseListener;
+import model.message.NOTE;
 import model.message.Notification;
 import model.workspace.Slide;
+import model.workspace.Slot;
 import observer.ISubscriber;
 
 import javax.swing.*;
@@ -15,10 +17,10 @@ public class SlideView extends JPanel implements ISubscriber {
     private Slide slide;
     private Image backgroundImage;
     private List <SlotView> slotViewList;
-    private SlideMouseListener listener;
+    private PresentationView presentationView;
 
-    public SlideView(Slide slide, Dimension d, Image backgroundImage) {
-        listener = new SlideMouseListener(this);
+    public SlideView(Slide slide, Dimension d, Image backgroundImage, PresentationView presentationView) {
+
         slotViewList = new ArrayList<>();
         this.slide = slide;
         this.backgroundImage = backgroundImage;
@@ -28,6 +30,8 @@ public class SlideView extends JPanel implements ISubscriber {
         setMaximumSize(d);
         slide.addSubscriber(this);
         setAlignmentX(CENTER_ALIGNMENT);
+        this.presentationView = presentationView;
+        addMouseListener(new SlideMouseListener(this));
     }
 
     public Slide getSlide() {
@@ -38,14 +42,33 @@ public class SlideView extends JPanel implements ISubscriber {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+        for (SlotView s : slotViewList) {
+            s.paint(g2d);
+        }
     }
 
     @Override
     public void update(Notification notification) {
 
+        NOTE note = notification.getType();
+        switch (note) {
+            case SLOT_ADDED: {
+                Slot slot = (Slot) notification.getPayload();
+                SlotView slotView = new SlotView(slot);
+                slotViewList.add(slotView);
+                repaint();
+            }
+        }
     }
 
-    public void clicked(Point point) {
+    public PresentationView getPresentationView() {
+        return presentationView;
+    }
 
+    public List<SlotView> getSlotViewList() {
+        return slotViewList;
     }
 }

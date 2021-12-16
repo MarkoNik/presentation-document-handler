@@ -14,7 +14,7 @@ public class SlotStateManager {
         state = createState;
     }
 
-    public void setAddState() {
+    public void setCreateState() {
         state = createState;
     }
 
@@ -26,4 +26,7 @@ public class SlotStateManager {
         state = moveState;
     }
 
+    public SlotState getState() {
+        return state;
+    }
 }

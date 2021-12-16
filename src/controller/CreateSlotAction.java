@@ -18,6 +18,6 @@ public class CreateSlotAction extends AbstractRudokAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         ((PresentationView) MainFrame.getInstance().getProjectView().getjTabbedPane().getSelectedComponent())
-                .getStateManager().setAddState();
+                .startCreateSlot();
     }
 }

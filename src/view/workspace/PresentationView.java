@@ -11,6 +11,7 @@ import view.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,10 +25,11 @@ public class PresentationView extends JPanel implements ISubscriber {
     private JLabel author;
     private Image backgroundImage;
 
-    private SlotStateManager stateManager;
+    private SlotStateManager slotStateManager;
 
     public PresentationView(Presentation presentation) {
 
+        slotStateManager = new SlotStateManager();
         setLayout(new BorderLayout());
         this.presentation = presentation;
 
@@ -59,8 +61,8 @@ public class PresentationView extends JPanel implements ISubscriber {
         add(author, BorderLayout.SOUTH);
         for (RuNode node : presentation.getChildren()) {
             Slide slide = (Slide) node;
-            SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage);
-            SlideView slideNav = new SlideView(slide, new Dimension(150, 100), backgroundImage);
+            SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage, this);
+            SlideView slideNav = new SlideView(slide, new Dimension(150, 100), backgroundImage, this);
             jPanel.add(slideView);
             navPanel.add(slideNav);
             jPanel.add(Box.createVerticalStrut(50));
@@ -90,8 +92,8 @@ public class PresentationView extends JPanel implements ISubscriber {
 
             case CHILD_ADDED: {
                 Slide slide = (Slide) notification.getPayload();
-                SlideView slideView = new SlideView(slide, new Dimension(900,600), backgroundImage);
-                SlideView slideNav = new SlideView(slide, new Dimension(150,100), backgroundImage);
+                SlideView slideView = new SlideView(slide, new Dimension(900,600), backgroundImage, this);
+                SlideView slideNav = new SlideView(slide, new Dimension(150,100), backgroundImage, this);
                 slides.add(slideView);
                 jPanel.add(slideView);
                 jPanel.add(Box.createVerticalStrut(50));
@@ -151,7 +153,7 @@ public class PresentationView extends JPanel implements ISubscriber {
                 jPanel.removeAll();
                 for (RuNode node : presentation.getChildren()) {
                     Slide slide = (Slide) node;
-                    SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage);
+                    SlideView slideView = new SlideView(slide, new Dimension(900, 600), backgroundImage, this);
                     jPanel.add(slideView);
                     jPanel.add(Box.createVerticalStrut(50));
                 }
@@ -159,7 +161,7 @@ public class PresentationView extends JPanel implements ISubscriber {
                 navPanel.removeAll();
                 for (RuNode node : presentation.getChildren()) {
                     Slide slide = (Slide) node;
-                    SlideView slideView = new SlideView(slide, new Dimension(150, 100), backgroundImage);
+                    SlideView slideView = new SlideView(slide, new Dimension(150, 100), backgroundImage, this);
                     navPanel.add(slideView);
                     navPanel.add(Box.createVerticalStrut(25));
                 }
@@ -170,7 +172,17 @@ public class PresentationView extends JPanel implements ISubscriber {
 
     }
 
-    public SlotStateManager getStateManager() {
-        return stateManager;
+    public void startCreateSlot() {
+        slotStateManager.setCreateState();
+    }
+    public void startDeleteSlot() {
+        slotStateManager.setDeleteState();
+    }
+    public void startMoveSlot() {
+        slotStateManager.setMoveState();
+    }
+
+    public void mousePressed(MouseEvent e, SlideView slideView) {
+        slotStateManager.getState().mouseClick(e, slideView);
     }
 }

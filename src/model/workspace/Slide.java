@@ -1,5 +1,7 @@
 package model.workspace;
 
+import model.message.NOTE;
+import model.message.Notification;
 import model.nodes.RuNode;
 
 import java.util.ArrayList;
@@ -21,5 +23,14 @@ public class Slide extends RuNode {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void addSlot(Slot slot) {
+        slots.add(slot);
+        notifySubscriber(new Notification(NOTE.SLOT_ADDED, slot));
+    }
+
+    public List<Slot> getSlots() {
+        return slots;
     }
 }

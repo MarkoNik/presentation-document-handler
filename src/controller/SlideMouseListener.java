@@ -4,8 +4,9 @@ import view.workspace.SlideView;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class SlideMouseListener implements MouseListener {
+public class SlideMouseListener implements MouseListener, MouseMotionListener {
 
     private SlideView slideView;
 
@@ -15,12 +16,11 @@ public class SlideMouseListener implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        slideView.clicked(e.getPoint());
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        slideView.getPresentationView().mousePressed(e, slideView);
     }
 
     @Override
@@ -35,6 +35,16 @@ public class SlideMouseListener implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
 
     }
 }

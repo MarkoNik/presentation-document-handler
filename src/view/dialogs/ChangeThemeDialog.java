@@ -6,10 +6,16 @@ import view.gui.tree.model.RuTreeNode;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.IOException;
 
 public class ChangeThemeDialog {
     public ChangeThemeDialog() {
-        JFileChooser chooser = new JFileChooser("E:\\raf\\src\\view\\workspace\\themes");
+        File currentDirFile = new File(".");
+        String helper = currentDirFile.getAbsolutePath();
+        String currentDir = helper.substring(0, helper.length() - 1);
+
+        JFileChooser chooser = new JFileChooser(currentDir + "src\\view\\workspace\\themes");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "JPG & GIF Images", "jpg", "gif");
         chooser.setFileFilter(filter);

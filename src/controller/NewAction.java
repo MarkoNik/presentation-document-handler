@@ -2,6 +2,7 @@ package controller;
 
 import model.error.ERROR;
 import model.error.ErrorFactory;
+import model.factory.RuNodeFactory;
 import model.nodes.RuNode;
 import model.nodes.RuNodeComposite;
 import model.workspace.Presentation;
@@ -34,32 +35,14 @@ public class NewAction extends AbstractRudokAction {
         // expanduje samo kad dodam drugo dete?
         MainFrame.getInstance().getTree().expandPath(MainFrame.getInstance().getTree().getSelectionPath());
 
-        RuNode modelNode = viewNode.getNode();
-        if (modelNode instanceof Slide) {
+        if (viewNode.getNode() instanceof Slide) {
             ErrorFactory.generate(ERROR.ADD_CHILD_TO_SLIDE).setVisible(true);
             return;
         }
 
-        RuNode newNode = null;
-        RuTreeNode newNodeView = null;
-        int childCount = 0;
-        if (modelNode instanceof RuNodeComposite) {
-            childCount = ((RuNodeComposite) modelNode).getMaxChild();
-        }
-
-        if (modelNode instanceof Workspace) {
-            newNode = new Project("Project " + childCount, modelNode);
-            MainFrame.getInstance().getProjectView().setProject((Project) newNode);
-
-        } else if (modelNode instanceof Project) {
-            newNode = new Presentation("Presentation " + childCount, modelNode, "user");
-
-        } else if (modelNode instanceof Presentation) {
-            newNode = new Slide("Slide " + childCount, modelNode, childCount);
-
-        }
-
-        ((RuNodeComposite) modelNode).addChild(newNode);
+        RuNodeComposite modelNode = (RuNodeComposite) viewNode.getNode();
+        RuNode newNode = RuNodeFactory.getFactory(modelNode.getClass()).createNode(modelNode);
+        modelNode.addChild(newNode);
         RuTreeNode newViewNode = new RuTreeNode(newNode);
         viewNode.add(newViewNode);
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class RuNodeComposite extends RuNode {
     protected List<RuNode> children;
-    protected int maxChild = 1;
+    protected int maxChild = 0;
 
     public RuNodeComposite(String name, RuNode parent) {
         super(name, parent);

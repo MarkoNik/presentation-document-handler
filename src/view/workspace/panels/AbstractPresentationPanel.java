@@ -9,15 +9,16 @@ import java.awt.*;
 public abstract class AbstractPresentationPanel extends JPanel implements PresentationPanel {
 
     protected int indexOfSlide(Slide slide, JPanel jPanel) {
-        int index = 0;
+        int index = -1;
         for (Component c : jPanel.getComponents()) {
 
-            if (!(c instanceof SlideView tmp)) continue;
-            if (tmp.getSlide().getId() == slide.getId()) {
-                slide.removeSubscriber(tmp);
+            index++;
+            if (!(c instanceof SlideView)) continue;
+            SlideView slideView = (SlideView) c;
+            if (slideView.getSlide().getId() == slide.getId()) {
                 break;
             }
-            index++;
-        } return index;
+        }
+        return index;
     }
 }

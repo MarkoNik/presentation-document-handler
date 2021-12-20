@@ -21,6 +21,7 @@ public class SlideMouseListener implements MouseListener, MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent e) {
         slideView.getPresentationView().mousePressed(e, slideView);
+        System.out.println(slideView.getSlide().getId());
     }
 
     @Override

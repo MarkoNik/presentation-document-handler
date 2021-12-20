@@ -1,6 +1,9 @@
 package state.slot;
 
+import model.workspace.Presentation;
 import model.workspace.Slot;
+import view.MainFrame;
+import view.workspace.PresentationView;
 import view.workspace.SlideView;
 
 import java.awt.*;
@@ -11,8 +14,19 @@ public class CreateState extends SlotState {
     public void mouseClick(MouseEvent e, SlideView slideView) {
 
         Point pos = e.getPoint();
-        Color fill = Color.GREEN;
-        Slot slot = new Slot(pos, Slot.slotDimension, fill, new BasicStroke(5f));
+        Presentation presentation = ((PresentationView) MainFrame.getInstance().getProjectView()
+                .getjTabbedPane().getSelectedComponent()).getPresentation();
+
+        Color fill = presentation.getSlotColor();
+        float lineWidth = presentation.getLineWidth();
+        boolean isDash = presentation.isDash();
+        Stroke stroke;
+        if (isDash) {
+            stroke = new BasicStroke(lineWidth, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1f,
+                    new float[] {10f, 18f}, 0f);
+        }
+        else stroke = new BasicStroke(lineWidth);
+        Slot slot = new Slot(pos, Slot.slotDimension, fill, stroke);
         slideView.getSlide().addSlot(slot);
     }
 }

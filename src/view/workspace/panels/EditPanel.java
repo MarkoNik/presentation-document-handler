@@ -4,6 +4,7 @@ import model.nodes.RuNode;
 import model.workspace.Presentation;
 import model.workspace.Slide;
 import view.MainFrame;
+import view.workspace.PresentationView;
 import view.workspace.SlideView;
 
 import javax.swing.*;
@@ -22,6 +23,29 @@ public class EditPanel extends AbstractPresentationPanel {
         toolBar.add(MainFrame.getInstance().getActionManager().getCreateSlotAction());
         toolBar.add(MainFrame.getInstance().getActionManager().getDeleteSlotAction());
         toolBar.add(MainFrame.getInstance().getActionManager().getMoveSlotAction());
+        toolBar.add(MainFrame.getInstance().getActionManager().getColorChooserAction());
+
+
+        JComboBox<Float> jComboBox = new JComboBox<>();
+        jComboBox.setMaximumSize(new Dimension(60, 40));
+        for (float x = 0; x <= 15; x += 0.5f) {
+            jComboBox.addItem(x);
+        }
+        jComboBox.setSelectedItem(5f);
+        jComboBox.addActionListener(e -> {
+            Presentation presentation = ((PresentationView) MainFrame.getInstance().getProjectView()
+                    .getjTabbedPane().getSelectedComponent()).getPresentation();
+            presentation.setLineWidth((Float) jComboBox.getSelectedItem());
+        });
+        toolBar.add(jComboBox);
+
+        JCheckBox jCheckBox = new JCheckBox("Dash");
+        jCheckBox.addActionListener(e -> {
+            Presentation presentation = ((PresentationView) MainFrame.getInstance().getProjectView()
+                    .getjTabbedPane().getSelectedComponent()).getPresentation();
+            presentation.setDash(!presentation.isDash());
+        });
+        toolBar.add(jCheckBox);
 
 
         jPanel = new JPanel();

@@ -5,23 +5,25 @@ import model.message.Notification;
 import model.nodes.RuNode;
 import model.nodes.RuNodeComposite;
 
+import java.awt.*;
+
 public class Presentation extends RuNodeComposite {
 
 
     private String author;
     private String backgroundPath;
     private Slot selectedSlot;
+    private Color slotColor;
+    private boolean dash;
+    private float lineWidth;
 
 
     public Presentation(String name, RuNode parent, String author) {
         super(name, parent);
         this.author = author;
-    }
-
-    public Presentation(String name, RuNode parent, String author, String backgroundPath) {
-        super(name, parent);
-        this.author = author;
-        this.backgroundPath = backgroundPath;
+        slotColor = Color.GREEN;
+        dash = false;
+        lineWidth = 5f;
     }
 
     @Override
@@ -66,5 +68,30 @@ public class Presentation extends RuNodeComposite {
 
     public void setSelectedSlot(Slot selectedSlot) {
         this.selectedSlot = selectedSlot;
+    }
+
+    public void setSlotColor(Color slotColor) {
+        this.slotColor = slotColor;
+    }
+
+    public Color getSlotColor() {
+        return slotColor;
+    }
+
+
+    public void setLineWidth(float lineWidth) {
+        this.lineWidth = lineWidth;
+    }
+
+    public float getLineWidth() {
+        return lineWidth;
+    }
+
+    public boolean isDash() {
+        return dash;
+    }
+
+    public void setDash(boolean dash) {
+        this.dash = dash;
     }
 }

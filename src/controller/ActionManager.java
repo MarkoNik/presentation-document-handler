@@ -13,6 +13,7 @@ public class ActionManager {
     private MoveSlotAction moveSlotAction;
     private SlideShowAction slideShowAction;
     private EditAction editAction;
+    private ColorChooserAction colorChooserAction;
 
     public ActionManager() {
         init();
@@ -29,6 +30,7 @@ public class ActionManager {
         moveSlotAction = new MoveSlotAction();
         slideShowAction = new SlideShowAction();
         editAction = new EditAction();
+        colorChooserAction = new ColorChooserAction();
     }
 
     public NewAction getNewAction() {
@@ -69,5 +71,9 @@ public class ActionManager {
 
     public EditAction getEditAction() {
         return editAction;
+    }
+
+    public ColorChooserAction getColorChooserAction() {
+        return colorChooserAction;
     }
 }

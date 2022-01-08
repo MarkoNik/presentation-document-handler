@@ -1,5 +1,6 @@
 package controller;
 
+import command.AddCommand;
 import model.error.ERROR;
 import model.error.ErrorFactory;
 import model.factory.RuNodeFactory;
@@ -26,28 +27,20 @@ public class NewAction extends AbstractRudokAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        // expand stablo na dodavanje novog cvora
+        MainFrame.getInstance().getTree().expandPath(MainFrame.getInstance().getTree().getSelectionPath());
+
+        // error check
         RuTreeNode viewNode = (RuTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
         if (viewNode == null) {
             ErrorFactory.generate(ERROR.NODE_NOT_SELECTED).setVisible(true);
             return;
         }
-
-        // expanduje samo kad dodam drugo dete?
-        MainFrame.getInstance().getTree().expandPath(MainFrame.getInstance().getTree().getSelectionPath());
-
         if (viewNode.getNode() instanceof Slide) {
             ErrorFactory.generate(ERROR.ADD_CHILD_TO_SLIDE).setVisible(true);
             return;
         }
 
-        RuNodeComposite modelNode = (RuNodeComposite) viewNode.getNode();
-        RuNode newNode = RuNodeFactory.getFactory(modelNode.getClass()).createNode(modelNode);
-        modelNode.addChild(newNode);
-        RuTreeNode newViewNode = new RuTreeNode(newNode);
-        viewNode.add(newViewNode);
-
-        SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getTree());
-
-
+        MainFrame.getInstance().getCommandManager().addCommand(new AddCommand(viewNode));
     }
 }

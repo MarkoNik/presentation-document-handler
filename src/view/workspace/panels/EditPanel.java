@@ -72,6 +72,7 @@ public class EditPanel extends AbstractPresentationPanel {
         jPanel.add(slideView);
         jPanel.add(Box.createVerticalStrut(50));
         jPanel.validate();
+        // sortiraj po indexu i dodaj na mesto
     }
 
     @Override
@@ -79,6 +80,7 @@ public class EditPanel extends AbstractPresentationPanel {
         navPanel.add(slideView);
         navPanel.add(Box.createVerticalStrut(25));
         navPanel.validate();
+        // sortiraj po indexu i dodaj na mesto
     }
 
     @Override

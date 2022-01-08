@@ -1,5 +1,6 @@
 package view;
 
+import command.CommandManager;
 import controller.ActionManager;
 import model.workspace.Workspace;
 import view.gui.tree.model.RuTreeNode;
@@ -14,6 +15,7 @@ public class MainFrame extends JFrame {
     private static MainFrame instance = null;
     private Menu menu;
     private ActionManager actionManager;
+    private CommandManager commandManager;
     private JPanel desktop;
     private JSplitPane split;
     private JPanel workspace;
@@ -27,6 +29,7 @@ public class MainFrame extends JFrame {
 
     private void init() {
         actionManager = new ActionManager();
+        commandManager = new CommandManager();
     }
 
     private void initGUI() {
@@ -79,6 +82,10 @@ public class MainFrame extends JFrame {
 
     public ActionManager getActionManager() {
         return actionManager;
+    }
+
+    public CommandManager getCommandManager() {
+        return commandManager;
     }
 
     public RuTree getTree() {

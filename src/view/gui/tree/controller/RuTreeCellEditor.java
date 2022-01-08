@@ -1,7 +1,9 @@
 package view.gui.tree.controller;
 
+import command.RenameCommand;
 import model.error.ERROR;
 import model.error.ErrorFactory;
+import view.MainFrame;
 import view.gui.tree.model.RuTreeNode;
 
 import javax.swing.*;
@@ -52,6 +54,7 @@ public class RuTreeCellEditor extends DefaultTreeCellEditor implements ActionLis
             return;
         }
 
+        MainFrame.getInstance().getCommandManager().addCommand(new RenameCommand(clicked, e.getActionCommand()));
         clicked.setName(e.getActionCommand());
         (clicked.getNode()).setName(e.getActionCommand());
 

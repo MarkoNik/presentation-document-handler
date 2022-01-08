@@ -1,5 +1,7 @@
 package controller;
 
+import command.AddCommand;
+import command.DeleteCommand;
 import model.error.ERROR;
 import model.error.ErrorFactory;
 import model.nodes.RuNode;
@@ -23,26 +25,19 @@ public class DeleteAction extends AbstractRudokAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        // error check
         RuTreeNode viewNode = (RuTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
         if (viewNode == null) {
             ErrorFactory.generate(ERROR.NODE_NOT_SELECTED).setVisible(true);
             return;
         }
-
         RuNode modelNode = viewNode.getNode();
         if (modelNode instanceof Workspace) {
             ErrorFactory.generate(ERROR.DELETE_WORKSPACE).setVisible(true);
             return;
         }
 
-        RuNode modelParent = modelNode.getParent();
-        RuTreeNode viewParent = (RuTreeNode) viewNode.getParent();
-
-        ((RuNodeComposite) modelParent).removeChild(modelNode);
-        viewParent.remove(viewNode);
-        MainFrame.getInstance().getTree().setSelectionPath(new TreePath(viewParent.getPath()));
-
-        SwingUtilities.updateComponentTreeUI(MainFrame.getInstance().getTree());
+        MainFrame.getInstance().getCommandManager().addCommand(new DeleteCommand(viewNode));
 
     }
 }

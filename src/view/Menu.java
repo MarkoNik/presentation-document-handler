@@ -14,6 +14,8 @@ public class Menu extends JMenuBar {
         JMenu menuEdit = new JMenu("Edit");
         menuEdit.add(MainFrame.getInstance().getActionManager().getChangeAuthorAction());
         menuEdit.add(MainFrame.getInstance().getActionManager().getChangeThemeAction());
+        menuEdit.add(MainFrame.getInstance().getActionManager().getUndoAction());
+        menuEdit.add(MainFrame.getInstance().getActionManager().getRedoAction());
         add(menuEdit);
 
 

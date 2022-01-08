@@ -14,6 +14,8 @@ public class ActionManager {
     private SlideShowAction slideShowAction;
     private EditAction editAction;
     private ColorChooserAction colorChooserAction;
+    private UndoAction undoAction;
+    private RedoAction redoAction;
 
     public ActionManager() {
         init();
@@ -31,6 +33,8 @@ public class ActionManager {
         slideShowAction = new SlideShowAction();
         editAction = new EditAction();
         colorChooserAction = new ColorChooserAction();
+        undoAction = new UndoAction();
+        redoAction = new RedoAction();
     }
 
     public NewAction getNewAction() {
@@ -75,5 +79,13 @@ public class ActionManager {
 
     public ColorChooserAction getColorChooserAction() {
         return colorChooserAction;
+    }
+
+    public UndoAction getUndoAction() {
+        return undoAction;
+    }
+
+    public RedoAction getRedoAction() {
+        return redoAction;
     }
 }

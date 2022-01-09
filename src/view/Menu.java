@@ -8,6 +8,9 @@ public class Menu extends JMenuBar {
         JMenu menuFile = new JMenu("File");
         menuFile.add(MainFrame.getInstance().getActionManager().getNewAction());
         menuFile.add(MainFrame.getInstance().getActionManager().getDeleteAction());
+        menuFile.add(MainFrame.getInstance().getActionManager().getSavePresentationAction());
+        menuFile.add(MainFrame.getInstance().getActionManager().getOpenPresentationAction());
+
         add(menuFile);
 
 

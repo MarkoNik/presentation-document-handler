@@ -4,6 +4,7 @@ import model.message.NOTE;
 import model.message.Notification;
 import model.nodes.RuNode;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,5 +38,11 @@ public class Slide extends RuNode {
 
     public List<Slot> getSlots() {
         return slots;
+    }
+    
+    @Serial
+    protected Object readResolve(){
+        subscribers = new ArrayList<>();
+        return this;
     }
 }

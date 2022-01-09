@@ -4,18 +4,21 @@ import model.message.Notification;
 import observer.IPublisher;
 import observer.ISubscriber;
 
+import javax.swing.event.EventListenerList;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RuNode implements IPublisher {
+public abstract class RuNode implements IPublisher, Serializable {
 
-    private List<ISubscriber> subscribers;
+    protected transient List<ISubscriber> subscribers = new ArrayList<>();
 
     protected String name;
     protected RuNode parent;
+    private transient boolean changed;
 
     public RuNode(String name, RuNode parent) {
-        subscribers = new ArrayList<>();
 
         this.name = name;
         this.parent = parent;
@@ -59,6 +62,7 @@ public abstract class RuNode implements IPublisher {
 
     @Override
     public void notifySubscriber(Notification notification) {
+        setChanged(true);
         for (ISubscriber sub : subscribers) {
             sub.update(notification);
         }
@@ -66,5 +70,13 @@ public abstract class RuNode implements IPublisher {
 
     public List<ISubscriber> getSubscribers() {
         return subscribers;
+    }
+
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
+
+    public boolean isChanged() {
+        return changed;
     }
 }

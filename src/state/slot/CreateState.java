@@ -2,7 +2,6 @@ package state.slot;
 
 import model.workspace.Presentation;
 import model.workspace.Slot;
-import serialization.SerializableStrokeAdapter;
 import view.MainFrame;
 import view.workspace.PresentationView;
 import view.workspace.SlideView;
@@ -27,8 +26,7 @@ public class CreateState extends SlotState {
                     new float[] {10f, 18f}, 0f);
         }
         else stroke = new BasicStroke(lineWidth);
-        SerializableStrokeAdapter serializableStrokeAdapter = new SerializableStrokeAdapter(stroke);
-        Slot slot = new Slot(pos, Slot.slotDimension, fill, serializableStrokeAdapter);
+        Slot slot = new Slot(pos, Slot.slotDimension, fill, stroke);
         slideView.getSlide().addSlot(slot);
     }
 }

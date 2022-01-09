@@ -1,8 +1,9 @@
 package view.workspace;
 
-import controller.listeners.SlideMouseListener;
+import controller.SlideMouseListener;
 import model.message.NOTE;
 import model.message.Notification;
+import model.nodes.RuNode;
 import model.workspace.Slide;
 import model.workspace.Slot;
 import observer.ISubscriber;

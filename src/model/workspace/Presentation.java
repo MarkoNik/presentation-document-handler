@@ -6,9 +6,6 @@ import model.nodes.RuNode;
 import model.nodes.RuNodeComposite;
 
 import java.awt.*;
-import java.io.File;
-import java.io.Serial;
-import java.util.ArrayList;
 
 public class Presentation extends RuNodeComposite {
 
@@ -19,7 +16,6 @@ public class Presentation extends RuNodeComposite {
     private Color slotColor;
     private boolean dash;
     private float lineWidth;
-    private File presentationFile;
 
 
     public Presentation(String name, RuNode parent, String author) {
@@ -97,20 +93,5 @@ public class Presentation extends RuNodeComposite {
 
     public void setDash(boolean dash) {
         this.dash = dash;
-    }
-
-    public void setPresentationFile(File presentationFile) {
-        this.presentationFile = presentationFile;
-    }
-
-    public File getPresentationFile() {
-        return presentationFile;
-    }
-
-
-    @Serial
-    protected Object readResolve(){
-        subscribers = new ArrayList<>();
-        return this;
     }
 }

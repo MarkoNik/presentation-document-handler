@@ -16,8 +16,6 @@ public class ActionManager {
     private ColorChooserAction colorChooserAction;
     private UndoAction undoAction;
     private RedoAction redoAction;
-    private SavePresentationAction savePresentationAction;
-    private OpenPresentationAction openPresentationAction;
 
     public ActionManager() {
         init();
@@ -37,8 +35,6 @@ public class ActionManager {
         colorChooserAction = new ColorChooserAction();
         undoAction = new UndoAction();
         redoAction = new RedoAction();
-        savePresentationAction = new SavePresentationAction();
-        openPresentationAction = new OpenPresentationAction();
     }
 
     public NewAction getNewAction() {
@@ -91,13 +87,5 @@ public class ActionManager {
 
     public RedoAction getRedoAction() {
         return redoAction;
-    }
-
-    public SavePresentationAction getSavePresentationAction() {
-        return savePresentationAction;
-    }
-
-    public OpenPresentationAction getOpenPresentationAction() {
-        return openPresentationAction;
     }
 }

@@ -1,4 +1,4 @@
-package controller.listeners;
+package controller;
 
 import view.workspace.SlideView;
 

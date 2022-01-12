@@ -1,8 +1,12 @@
 package controller;
 
 import controller.filters.PresentationFileFilter;
+import model.error.ERROR;
+import model.error.ErrorFactory;
 import model.workspace.Presentation;
+import model.workspace.Slide;
 import view.MainFrame;
+import view.gui.tree.model.RuTreeNode;
 import view.workspace.PresentationView;
 
 import javax.swing.*;
@@ -23,12 +27,13 @@ public class SavePresentationAction extends AbstractRudokAction {
 
         JFileChooser jfc = new JFileChooser();
         jfc.setFileFilter(new PresentationFileFilter());
-        Presentation presentation = ((PresentationView) (MainFrame
-                                                            .getInstance()
-                                                            .getProjectView()
-                                                            .getjTabbedPane()
-                                                            .getSelectedComponent()))
-                                                            .getPresentation();
+        RuTreeNode viewNode = (RuTreeNode) MainFrame.getInstance().getTree().getLastSelectedPathComponent();
+        if (! (viewNode.getNode() instanceof Presentation)) {
+            ErrorFactory.generate(ERROR.PRESENTATION_NOT_SELECTED).setVisible(true);
+            return;
+        }
+
+        Presentation presentation = (Presentation) viewNode.getNode();
         if (!presentation.isChanged()) return;
         File presentationFile = presentation.getPresentationFile();
 
@@ -42,9 +47,11 @@ public class SavePresentationAction extends AbstractRudokAction {
 
         ObjectOutputStream os;
         try {
-            os = new ObjectOutputStream(new FileOutputStream(presentationFile));
+            String name = presentationFile.getName();
+            File f = new File(presentationFile.getParent(), name + ".pnf");
+            os = new ObjectOutputStream(new FileOutputStream(f));
             os.writeObject(presentation);
-            presentation.setPresentationFile(presentationFile);
+            presentation.setPresentationFile(f);
             presentation.setChanged(false);
 
         } catch (IOException e1) {

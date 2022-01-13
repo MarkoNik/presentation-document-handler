@@ -4,6 +4,7 @@ import view.MainFrame;
 import view.workspace.PresentationView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class ColorChooserAction extends AbstractRudokAction {
@@ -18,7 +19,9 @@ public class ColorChooserAction extends AbstractRudokAction {
         PresentationView presentationView = ((PresentationView) MainFrame.getInstance().getProjectView()
                 .getjTabbedPane().getSelectedComponent());
 
-        presentationView.getPresentation().setSlotColor(JColorChooser
-                .showDialog(presentationView, "Color dialog", presentationView.getPresentation().getSlotColor()));
+        Color color = JColorChooser
+                .showDialog(presentationView, "Color dialog", presentationView.getPresentation().getSlotColor());
+        if (color == null) return;
+        presentationView.getPresentation().setSlotColor(color);
     }
 }

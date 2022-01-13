@@ -1,6 +1,8 @@
 package model.workspace;
 
-import model.content.Type;
+import model.content.ISlotContent;
+import model.content.ImageContent;
+import model.content.TextContent;
 import model.message.NOTE;
 import model.message.Notification;
 import observer.IPublisher;
@@ -22,17 +24,18 @@ public class Slot implements IPublisher, Serializable {
     private Color color;
     private SerializableStrokeAdapter stroke;
     private boolean selected;
-    private String content;
-    private Type type;
+    private boolean slideShow = false;
+    private ISlotContent slotContent;
     private transient List<ISubscriber> subscribers = new ArrayList<>();
 
-    public Slot(Point position, Dimension size, Color color, SerializableStrokeAdapter stroke, Type type) {
+    public Slot(Point position, Dimension size, Color color, SerializableStrokeAdapter stroke, String type) {
 
         this.position = position;
         this.size = size;
         this.color = color;
         this.stroke = stroke;
-        this.type = type;
+        if (type.equals("text")) slotContent = new TextContent();
+        if (type.equals("image")) slotContent = new ImageContent();
     }
 
     public Point getPosition() {
@@ -100,28 +103,28 @@ public class Slot implements IPublisher, Serializable {
 
     @Serial
     private Object readResolve(){
+        slideShow = false;
         subscribers = new ArrayList<>();
         return this;
     }
 
-    public String getContent() {
-        return content;
+    public ISlotContent getSlotContent() {
+        return slotContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-        notifySubscriber(new Notification(NOTE.CONTENT_UPDATED, content));
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
+    public void setSlotContent(ISlotContent slotContent) {
+        this.slotContent = slotContent;
     }
 
     public void setSubscribers(List<ISubscriber> subscribers) {
         this.subscribers = subscribers;
+    }
+
+    public boolean isSlideShow() {
+        return slideShow;
+    }
+
+    public void setSlideShow(boolean slideShow) {
+        this.slideShow = slideShow;
     }
 }

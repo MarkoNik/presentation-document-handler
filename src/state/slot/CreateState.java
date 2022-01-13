@@ -1,6 +1,5 @@
 package state.slot;
 
-import model.content.Type;
 import model.workspace.Presentation;
 import model.workspace.Slot;
 import serialization.SerializableStrokeAdapter;
@@ -31,9 +30,9 @@ public class CreateState extends SlotState {
         else stroke = new BasicStroke(lineWidth);
         SerializableStrokeAdapter serializableStrokeAdapter = new SerializableStrokeAdapter(stroke);
 
-        Type type;
-        if (presentationView.isText()) type = Type.TEXT;
-        else type = Type.IMAGE;
+        String type;
+        if (presentationView.isText()) type = "text";
+        else type = "image";
 
         Slot slot = new Slot(pos, Slot.slotDimension, fill, serializableStrokeAdapter, type);
         slideView.getSlide().addSlot(slot);

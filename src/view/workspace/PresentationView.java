@@ -5,6 +5,7 @@ import model.message.Notification;
 import model.nodes.RuNode;
 import model.workspace.Presentation;
 import model.workspace.Slide;
+import model.workspace.Slot;
 import observer.ISubscriber;
 import state.presentation.PresentationStateManager;
 import state.slot.SlotStateManager;
@@ -118,6 +119,13 @@ public class PresentationView extends JPanel implements ISubscriber {
 
     public void changeState()  {
         remove(canvas);
+        for (RuNode nodeSlide : presentation.getChildren()) {
+            Slide slide = (Slide) nodeSlide;
+            for (Slot slot : slide.getSlots()) {
+                slot.setSlideShow(!slot.isSlideShow());
+            }
+        }
+
         canvas = presentationStateManager.getPresentationState().initComponent();
         add(canvas);
         reload();

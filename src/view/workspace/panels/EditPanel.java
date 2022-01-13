@@ -1,18 +1,13 @@
 package view.workspace.panels;
 
-import model.content.Type;
-import model.nodes.RuNode;
 import model.workspace.Presentation;
 import model.workspace.Slide;
-import model.workspace.Slot;
 import view.MainFrame;
 import view.workspace.PresentationView;
 import view.workspace.SlideView;
-import view.workspace.SlotView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class EditPanel extends AbstractPresentationPanel {
 

@@ -68,6 +68,7 @@ public class ProjectView extends JPanel implements ISubscriber {
             // brise sve subscribere od slotova kad promeni projekat
             for (RuNode q : presentation.getChildren()) {
                 for(Slot s : ((Slide)q).getSlots()) {
+                    s.setSlideShow(false);
                     s.getSubscribers().clear();
                 }
             }

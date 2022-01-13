@@ -7,7 +7,9 @@ import view.workspace.SlotView;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.Position;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 public class ImageContentHandler implements SlotContentHandler {
@@ -15,11 +17,17 @@ public class ImageContentHandler implements SlotContentHandler {
     private String path;
 
     @Override
-    public void draw(SlotView slotView) {
-    }
+    public void draw(SlotView slotView, Graphics2D g) {
+        Point position = slotView.getSlot().getPosition();
+        try {
+            image = ImageIO
+                    .read(new File(slotView.getSlot().getSlotContent().getSlotText()))
+                    .getScaledInstance(Slot.slotDimension.width, Slot.slotDimension.height, Image.SCALE_DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    @Override
-    public void format(String content) {
+        g.drawImage(image, position.x, position.y, null);
 
     }
 
@@ -82,7 +90,7 @@ public class ImageContentHandler implements SlotContentHandler {
 
         JButton continueBtn = new JButton("Continue");
         continueBtn.addActionListener(e -> {
-            slotView.getSlot().setContent(path);
+            slotView.getSlot().getSlotContent().setSlotText(path);
             dialog.dispose();
         });
         panel.add(continueBtn);

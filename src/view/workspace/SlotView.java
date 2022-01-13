@@ -1,10 +1,8 @@
 package view.workspace;
 
-import model.content.Type;
-import model.message.NOTE;
-import model.message.Notification;
+import model.content.ImageContent;
+import model.content.TextContent;
 import model.workspace.Slot;
-import observer.ISubscriber;
 import view.workspace.content.ImageContentHandler;
 import view.workspace.content.SlotContentHandler;
 import view.workspace.content.TextContentHandler;
@@ -12,15 +10,15 @@ import view.workspace.content.TextContentHandler;
 import javax.swing.*;
 import java.awt.*;
 
-public class SlotView extends JPanel implements ISubscriber {
+public class SlotView extends JPanel {
 
     private Slot slot;
     private SlotContentHandler handler;
 
     public SlotView(Slot slot) {
         this.slot = slot;
-        if (slot.getType() == Type.TEXT) handler = new TextContentHandler();
-        if (slot.getType() == Type.IMAGE) handler = new ImageContentHandler();
+        if (slot.getSlotContent() instanceof TextContent) handler = new TextContentHandler();
+        if (slot.getSlotContent() instanceof ImageContent) handler = new ImageContentHandler();
     }
 
     public void paint(Graphics2D g) {
@@ -37,6 +35,7 @@ public class SlotView extends JPanel implements ISubscriber {
         if (slot.isSelected()) g.setPaint(Color.RED);
 
         g.drawRect(x, y, w, h);
+        if (slot.isSlideShow()) handler.draw(this, g);
     }
 
     public boolean elementAt(Point p) {
@@ -55,12 +54,5 @@ public class SlotView extends JPanel implements ISubscriber {
 
     public SlotContentHandler getHandler() {
         return handler;
-    }
-
-    @Override
-    public void update(Notification notification) {
-        NOTE note = notification.getType();
-        if (note == NOTE.CONTENT_UPDATED)
-            handler.format((String) notification.getPayload());
     }
 }

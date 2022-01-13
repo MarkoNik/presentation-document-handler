@@ -9,6 +9,7 @@ public class DeleteState extends SlotState {
     @Override
     public void mouseClick(MouseEvent e, SlideView slideView) {
         SlotView sv = clickedSlotView(e, slideView);
+        if (sv == null) return;
         slideView.getSlide().removeSlot(sv.getSlot());
     }
 }

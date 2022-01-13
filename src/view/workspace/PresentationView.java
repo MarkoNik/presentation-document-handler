@@ -148,4 +148,8 @@ public class PresentationView extends JPanel implements ISubscriber {
     public void setPresentation(Presentation presentation) {
         this.presentation = presentation;
     }
+
+    public boolean isText() {
+        return ((EditPanel) canvas).isText();
+    }
 }

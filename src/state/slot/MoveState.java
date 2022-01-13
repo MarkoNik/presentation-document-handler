@@ -22,6 +22,10 @@ public class MoveState extends SlotState {
             ((Presentation) slideView.getSlide().getParent()).setSelectedSlot(slotView.getSlot());
             offsetX = e.getX() - slotView.getSlot().getPosition().x;
             offsetY = e.getY() - slotView.getSlot().getPosition().y;
+            if (e.getClickCount() == 2) {
+                slotView.getHandler().edit(slotView);
+            }
+
             return;
         }
 

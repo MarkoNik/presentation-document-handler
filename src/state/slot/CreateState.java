@@ -1,5 +1,6 @@
 package state.slot;
 
+import model.content.Type;
 import model.workspace.Presentation;
 import model.workspace.Slot;
 import serialization.SerializableStrokeAdapter;
@@ -15,8 +16,9 @@ public class CreateState extends SlotState {
     public void mouseClick(MouseEvent e, SlideView slideView) {
 
         Point pos = e.getPoint();
-        Presentation presentation = ((PresentationView) MainFrame.getInstance().getProjectView()
-                .getjTabbedPane().getSelectedComponent()).getPresentation();
+        PresentationView presentationView = (PresentationView) MainFrame.getInstance().getProjectView()
+                .getjTabbedPane().getSelectedComponent();
+        Presentation presentation = presentationView.getPresentation();
 
         Color fill = presentation.getSlotColor();
         float lineWidth = presentation.getLineWidth();
@@ -28,7 +30,12 @@ public class CreateState extends SlotState {
         }
         else stroke = new BasicStroke(lineWidth);
         SerializableStrokeAdapter serializableStrokeAdapter = new SerializableStrokeAdapter(stroke);
-        Slot slot = new Slot(pos, Slot.slotDimension, fill, serializableStrokeAdapter);
+
+        Type type;
+        if (presentationView.isText()) type = Type.TEXT;
+        else type = Type.IMAGE;
+
+        Slot slot = new Slot(pos, Slot.slotDimension, fill, serializableStrokeAdapter, type);
         slideView.getSlide().addSlot(slot);
     }
 }

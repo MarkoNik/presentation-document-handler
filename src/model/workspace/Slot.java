@@ -1,12 +1,12 @@
 package model.workspace;
 
+import model.content.Type;
 import model.message.NOTE;
 import model.message.Notification;
 import observer.IPublisher;
 import observer.ISubscriber;
 import serialization.SerializableStrokeAdapter;
 
-import javax.swing.event.EventListenerList;
 import java.awt.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,20 +16,23 @@ import java.util.List;
 
 public class Slot implements IPublisher, Serializable {
 
-    public static final Dimension slotDimension = new Dimension(100, 50);
+    public static final Dimension slotDimension = new Dimension(200, 150);
     private Point position;
     private Dimension size;
     private Color color;
     private SerializableStrokeAdapter stroke;
     private boolean selected;
+    private String content;
+    private Type type;
     private transient List<ISubscriber> subscribers = new ArrayList<>();
 
-    public Slot(Point position, Dimension size, Color color, SerializableStrokeAdapter stroke) {
+    public Slot(Point position, Dimension size, Color color, SerializableStrokeAdapter stroke, Type type) {
 
         this.position = position;
         this.size = size;
         this.color = color;
         this.stroke = stroke;
+        this.type = type;
     }
 
     public Point getPosition() {
@@ -99,5 +102,26 @@ public class Slot implements IPublisher, Serializable {
     private Object readResolve(){
         subscribers = new ArrayList<>();
         return this;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+        notifySubscriber(new Notification(NOTE.CONTENT_UPDATED, content));
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public void setSubscribers(List<ISubscriber> subscribers) {
+        this.subscribers = subscribers;
     }
 }

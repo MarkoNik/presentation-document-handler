@@ -12,4 +12,5 @@ public enum NOTE {
     SLOT_DELETED,
     SLOT_SELECTED,
     SLOT_MOVED,
+    CONTENT_UPDATED,
 }

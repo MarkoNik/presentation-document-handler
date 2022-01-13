@@ -1,11 +1,14 @@
 package view.workspace.panels;
 
+import model.content.Type;
 import model.nodes.RuNode;
 import model.workspace.Presentation;
 import model.workspace.Slide;
+import model.workspace.Slot;
 import view.MainFrame;
 import view.workspace.PresentationView;
 import view.workspace.SlideView;
+import view.workspace.SlotView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +18,8 @@ public class EditPanel extends AbstractPresentationPanel {
 
     private JPanel jPanel, navPanel;
     private JToolBar toolBar;
+    private JRadioButton text = new JRadioButton("text");
+    private JRadioButton image = new JRadioButton("image");
 
     public EditPanel() {
 
@@ -24,6 +29,12 @@ public class EditPanel extends AbstractPresentationPanel {
         toolBar.add(MainFrame.getInstance().getActionManager().getDeleteSlotAction());
         toolBar.add(MainFrame.getInstance().getActionManager().getMoveSlotAction());
         toolBar.add(MainFrame.getInstance().getActionManager().getColorChooserAction());
+        text.setSelected(true);
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(text);
+        bg.add(image);
+        toolBar.add(text);
+        toolBar.add(image);
 
 
         JComboBox<Float> jComboBox = new JComboBox<>();
@@ -103,4 +114,9 @@ public class EditPanel extends AbstractPresentationPanel {
         jPanel.validate();
         navPanel.validate();
     }
+
+    public boolean isText() {
+        return text.isSelected();
+    }
+
 }

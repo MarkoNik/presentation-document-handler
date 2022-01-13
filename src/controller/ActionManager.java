@@ -47,6 +47,8 @@ public class ActionManager {
         openProjectAction = new OpenProjectAction();
         saveWorkspaceAction = new SaveWorkspaceAction();
         openWorkspaceAction = new OpenWorkspaceAction();
+        undoAction.setEnabled(false);
+        redoAction.setEnabled(false);
     }
 
     public NewAction getNewAction() {

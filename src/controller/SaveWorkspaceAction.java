@@ -45,7 +45,7 @@ public class SaveWorkspaceAction  extends AbstractRudokAction {
         for (RuNode node : workspace.getChildren()) {
             Project project = (Project) node;
 
-            File projectFile;
+            File projectFile = null;
             try {
                 projectFile = new File(workspaceDirectory.getCanonicalPath() + "\\" + project.getName() + ".pjf");
             } catch (IOException ex) {

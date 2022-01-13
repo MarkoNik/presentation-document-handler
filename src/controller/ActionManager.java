@@ -22,6 +22,7 @@ public class ActionManager {
     private OpenProjectAction openProjectAction;
     private SaveWorkspaceAction saveWorkspaceAction;
     private OpenWorkspaceAction openWorkspaceAction;
+    private ShareAction shareAction;
 
     public ActionManager() {
         init();
@@ -47,6 +48,7 @@ public class ActionManager {
         openProjectAction = new OpenProjectAction();
         saveWorkspaceAction = new SaveWorkspaceAction();
         openWorkspaceAction = new OpenWorkspaceAction();
+        shareAction = new ShareAction();
         undoAction.setEnabled(false);
         redoAction.setEnabled(false);
     }
@@ -125,5 +127,9 @@ public class ActionManager {
 
     public OpenWorkspaceAction getOpenWorkspaceAction() {
         return openWorkspaceAction;
+    }
+
+    public ShareAction getShareAction() {
+        return shareAction;
     }
 }

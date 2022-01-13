@@ -17,6 +17,8 @@ public class Menu extends JMenuBar {
         menuFile.addSeparator();
         menuFile.add(MainFrame.getInstance().getActionManager().getSaveWorkspaceAction());
         menuFile.add(MainFrame.getInstance().getActionManager().getOpenWorkspaceAction());
+        menuFile.add(MainFrame.getInstance().getActionManager().getShareAction());
+
 
         add(menuFile);
 

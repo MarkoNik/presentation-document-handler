@@ -9,6 +9,8 @@ public class ErrorFactory {
             case DELETE_WORKSPACE -> new DeleteWorkspaceError();
             case NODE_NOT_SELECTED -> new NodeNotSelectedError();
             case PRESENTATION_NOT_SELECTED -> new PresentationNotSelectedError();
+            case PROJECT_NOT_SELECTED -> new ProjectNotSelectedError();
+            case WORKSPACE_NOT_SELECTED -> new WorkspaceNotSelectedError();
             case WRONG_PATH -> new WrongPathError();
         };
     }

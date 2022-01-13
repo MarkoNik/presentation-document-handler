@@ -8,11 +8,17 @@ public class Menu extends JMenuBar {
         JMenu menuFile = new JMenu("File");
         menuFile.add(MainFrame.getInstance().getActionManager().getNewAction());
         menuFile.add(MainFrame.getInstance().getActionManager().getDeleteAction());
+        menuFile.addSeparator();
         menuFile.add(MainFrame.getInstance().getActionManager().getSavePresentationAction());
         menuFile.add(MainFrame.getInstance().getActionManager().getOpenPresentationAction());
+        menuFile.addSeparator();
+        menuFile.add(MainFrame.getInstance().getActionManager().getSaveProjectAction());
+        menuFile.add(MainFrame.getInstance().getActionManager().getOpenProjectAction());
+        menuFile.addSeparator();
+        menuFile.add(MainFrame.getInstance().getActionManager().getSaveWorkspaceAction());
+        menuFile.add(MainFrame.getInstance().getActionManager().getOpenWorkspaceAction());
 
         add(menuFile);
-
 
         JMenu menuEdit = new JMenu("Edit");
         menuEdit.add(MainFrame.getInstance().getActionManager().getChangeAuthorAction());

@@ -3,6 +3,7 @@ package view;
 import command.CommandManager;
 import controller.ActionManager;
 import model.workspace.Workspace;
+import view.dialogs.PickContextDialog;
 import view.gui.tree.model.RuTreeNode;
 import view.gui.tree.view.RuTree;
 import view.workspace.ProjectView;
@@ -50,6 +51,7 @@ public class MainFrame extends JFrame {
         RuTreeNode mtn = new RuTreeNode(ws);
         tree = new RuTree(mtn);
         JScrollPane scroll = new JScrollPane(tree);
+        PickContextDialog contextDialog = new PickContextDialog();
 
 
         scroll.setMinimumSize(new Dimension(200, 150));

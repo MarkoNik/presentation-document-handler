@@ -33,10 +33,16 @@ public class SlideShowPanel extends AbstractPresentationPanel {
         nav.add(next);
         add(nav, BorderLayout.SOUTH);
 
+        JPanel wrapper = new JPanel();
+        Dimension d = new Dimension(900, 600);
+        wrapper.setPreferredSize(d);
+        wrapper.setMaximumSize(d);
+        wrapper.setMinimumSize(d);
         jPanel = new JPanel();
         cardLayout = new CardLayout();
         jPanel.setLayout(cardLayout);
-        add(jPanel, BorderLayout.CENTER);
+        wrapper.add(jPanel);
+        add(wrapper, BorderLayout.CENTER);
     }
 
     @Override
